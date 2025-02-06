@@ -13,33 +13,33 @@ MonoBehaviour:
   m_Name: GeneralEnemyData
   m_EditorClassIdentifier: 
   data:
-    hp: 0
-    moveSpeed: 0
-    moveDirection: {x: 0, y: 0}
-    obstacleRaycastDistance: 0
-    recognizeRadius: 0
+    hp: 10
+    moveSpeed: 5
+    moveDirection: {x: 1, y: -1}
+    obstacleRaycastDistance: 0.5
+    recognizeRadius: 5
     targetLayer:
       serializedVersion: 2
-      m_Bits: 0
+      m_Bits: 2048
     targetTransform: {fileID: 0}
     knockBackPower: 0
-    attackSpeed: 0
-    attackDamage: 0
+    attackSpeed: 5
+    attackDamage: 5
     divisionCoolTime: 0
     divisionProbability: 0
-    medicineType: 0
-  hp: 0
-  moveSpeed: 0
+    medicineType: 1
+  hp: 10
+  moveSpeed: 5
   moveDirection: {x: 1, y: -1}
-  obstacleRaycastDistance: 0
-  recognizeRadius: 0
+  obstacleRaycastDistance: 0.5
+  recognizeRadius: 5
   targetLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
   targetTransform: {fileID: 0}
   knockBackPower: 0
-  attackSpeed: 0
-  attackDamage: 0
+  attackSpeed: 5
+  attackDamage: 5
   divisionCoolTime: 0
   divisionProbability: 0
   medicineType: 1
