@@ -17,11 +17,13 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
     protected bool FindTarget = false;
     
     [Header("Ref")]
-    public SpriteRenderer sprite;
-    public Animator animator;
-    public Rigidbody2D rb;
+    [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private Animator animator;
+    [SerializeField] private Rigidbody2D rb;
     [SerializeField] private GeneralEnemyData refData;
-    
+
+    private float maxHp;
+    private HPGauge hpGaugeInstance;
     //private const int PlayerLayer = 1 << 6;
     //private const int WallLayer = 1 << 7;
     
@@ -57,6 +59,14 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
 
     protected virtual void Start()
     {
+        maxHp = generalMonsterData.hp;
+        Vector3 initialScreenPos = Camera.main.WorldToScreenPoint(transform.position);
+        if (UIManager.Instance != null)
+        {
+            hpGaugeInstance = UIManager.Instance.GetHpGauge(initialScreenPos);
+            hpGaugeInstance.SetTarget(transform);
+        }
+        UpdateHpGauge();
         IdleEnter();
     }
 
@@ -166,7 +176,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
             FindTarget = true;
         }
         
-        Invoke("CheckTarget", 1f);
+        Invoke("CheckTarget", 0.25f);
     }
     
     protected bool DetectObstacle()
@@ -239,11 +249,26 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         if( currentState == deathState) return;
 
         generalMonsterData.hp -= damage;
+        generalMonsterData.hp = Mathf.Clamp(generalMonsterData.hp, 0, maxHp);
+        UpdateHpGauge();
         //UIManager.instance.hitDamageInfo.PrintHitDamage(transform, damage);
 
-        if ( generalMonsterData.hp < 0)
+        if ( generalMonsterData.hp <= 0)
         {
+            Destroy(hpGaugeInstance.gameObject);
             Destroy(this.gameObject);
+        }
+    }
+    
+    /// <summary>
+    /// 현재 체력 비율에 맞게 HP 게이지를 업데이트합니다.
+    /// </summary>
+    private void UpdateHpGauge()
+    {
+        if (hpGaugeInstance != null)
+        {
+            float percent = generalMonsterData.hp / maxHp;
+            hpGaugeInstance.SetHpGauge(percent);
         }
     }
 }

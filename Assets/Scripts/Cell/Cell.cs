@@ -4,10 +4,10 @@ using System.Collections;
 public class Cell : MonoBehaviour
 {
     // 細胞の初期HP（希望する値に設定）
-    public float hp = 100f;
+    [SerializeField] private float hp = 100f;
 
     // 揺れの強さ（お好みの値に調整）
-    public float shakeAmount = 0.25f;
+    [SerializeField] private float shakeAmount = 0.25f;
 
     // 被撃効果重複実行防止用フラッグ
     private bool isHitEffectPlaying = false;
@@ -20,7 +20,7 @@ public class Cell : MonoBehaviour
     public void GetDamaged(float damage)
     {
         hp -= damage;
-        Debug.Log("ダメージを受けました。 現在HP: " + hp);
+        //Debug.Log("ダメージを受けました。 現在HP: " + hp);
 
         if (!isHitEffectPlaying)
         {
@@ -38,7 +38,6 @@ public class Cell : MonoBehaviour
     /// </summary>
     private void DestroyCell()
     {
-        //Debug.Log("세포가 파괴되었습니다!");
         Destroy(gameObject);
     }
 

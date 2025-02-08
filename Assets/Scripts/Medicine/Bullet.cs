@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,8 +21,9 @@ public class Bullet : MonoBehaviour
     private void Update()
     {
         Vector3 newPosition;
-        newPosition = thisTransform.position + addVector * speed;
-        transform.position = new Vector3(newPosition.x, newPosition.y, newPosition.z);
+        //newPosition = thisTransform.position + addVector * speed;
+        //transform.position = new Vector3(newPosition.x, newPosition.y, newPosition.z);
+        transform.position += Time.deltaTime * speed * addVector;
         distance_P = (playerObj.transform.position - transform.position).sqrMagnitude;
         if (distance_P > deleteDistance)
         {
@@ -31,9 +33,10 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        playerObj = GameObject.Find("Player"); // ãè‚­“®‚©‚È‚©‚Á‚½‚çƒGƒ‰[“f‚¢‚Ä‚Ù‚µ‚¢
+        playerObj = GameObject.Find("Player"); // ï¿½ï¿½è‚­ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Gï¿½ï¿½ï¿½[ï¿½fï¿½ï¿½ï¿½Ä‚Ù‚ï¿½ï¿½ï¿½
         thisTransform = transform;
-        addVector = 100 * new Vector3(direction.x * Time.deltaTime, direction.y * Time.deltaTime, 0);
+        //addVector = 100 * new Vector3(direction.x * Time.deltaTime, direction.y * Time.deltaTime, 0);
+        addVector = new Vector3(direction.x, direction.y, 0);
         addVector.Normalize();
         Debug.Log(addVector);
     }
@@ -41,5 +44,17 @@ public class Bullet : MonoBehaviour
     public void getVector(Vector3 from, Vector3 to)
     {
         direction = new Vector3(to.x - from.x, to.y - from.y, to.z - from.z);
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.layer == 21)
+        {
+            var enemy = other.gameObject.GetComponent<IDamageable>();
+            if (enemy != null)
+            {
+                enemy.GetDamaged(2f, MedicineType.Medicine1);
+            }
+        }
     }
 }
