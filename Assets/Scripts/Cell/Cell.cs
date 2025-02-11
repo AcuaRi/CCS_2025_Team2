@@ -19,6 +19,8 @@ public class Cell : MonoBehaviour
     /// <param name="damage">入力ダメージ値</param>
     public void GetDamaged(float damage)
     {
+        if(damage <= 0) return;
+        
         hp -= damage;
         //Debug.Log("ダメージを受けました。 現在HP: " + hp);
 
@@ -38,7 +40,8 @@ public class Cell : MonoBehaviour
     /// </summary>
     private void DestroyCell()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        this.gameObject.SetActive(false);
     }
 
     /// <summary>
