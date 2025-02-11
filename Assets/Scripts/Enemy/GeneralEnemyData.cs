@@ -28,7 +28,9 @@ public class GeneralEnemyData : ScriptableObject
     public float divisionProbability;
     
     [Header("Medicine Setting")] [EnumFlags]  
-    public MedicineType medicineType;
+    public MedicineType goodMedicineTypes;
+    public MedicineType badMedicineTypes;
+    public MedicineType resistantMedicineType;
     
     //Sync SO class variable to struct data (for deep copy)
     public void SyncData()
@@ -50,6 +52,8 @@ public class GeneralEnemyData : ScriptableObject
         data.divisionCoolTime = divisionCoolTime;
         data.divisionProbability = divisionProbability;
         
-        data.medicineType = medicineType;
+        data.goodMedicineTypes = goodMedicineTypes;
+        data.badMedicineTypes = badMedicineTypes;
+        data.resistantMedicineType = resistantMedicineType;
     }
 }

@@ -20,5 +20,8 @@ public struct GeneralEnemyDataStruct
     public float divisionCoolTime;
     public float divisionProbability;
     
-    public MedicineType medicineType;
+    
+    public MedicineType goodMedicineTypes;
+    public MedicineType badMedicineTypes;
+    public MedicineType resistantMedicineType;
 }

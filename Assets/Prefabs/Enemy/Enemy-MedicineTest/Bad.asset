@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 850c8fd7959189a44921c498191d3766, type: 3}
-  m_Name: GeneralEnemyData
+  m_Name: Bad
   m_EditorClassIdentifier: 
   data:
-    hp: 10
+    hp: 100
     moveSpeed: 5
     moveDirection: {x: 1, y: -1}
     obstacleRaycastDistance: 0.5
@@ -30,7 +30,7 @@ MonoBehaviour:
     goodMedicineTypes: 0
     badMedicineTypes: 0
     resistantMedicineType: 0
-  hp: 10
+  hp: 100
   moveSpeed: 5
   moveDirection: {x: 1, y: -1}
   obstacleRaycastDistance: 0.5
@@ -45,5 +45,5 @@ MonoBehaviour:
   divisionCoolTime: 0
   divisionProbability: 0
   goodMedicineTypes: 1
-  badMedicineTypes: 0
+  badMedicineTypes: 1
   resistantMedicineType: 0

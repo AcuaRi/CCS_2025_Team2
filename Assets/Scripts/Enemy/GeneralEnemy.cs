@@ -6,7 +6,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
     public GeneralEnemyDataStruct GeneralMonsterData => generalMonsterData;
     
     //FSM State
-    private bool isTransition = false;
+    protected bool isTransition = false;
     protected FSMState idleState;
     protected FSMState attackState;
     protected FSMState deathState;
@@ -17,13 +17,13 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
     protected bool FindTarget = false;
     
     [Header("Ref")]
-    [SerializeField] private SpriteRenderer sprite;
-    [SerializeField] private Animator animator;
-    [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private GeneralEnemyData refData;
+    [SerializeField] protected SpriteRenderer sprite;
+    [SerializeField] protected Animator animator;
+    [SerializeField] protected Rigidbody2D rb;
+    [SerializeField] protected GeneralEnemyData refData;
 
-    private float maxHp;
-    private HPGauge hpGaugeInstance;
+    protected float maxHp;
+    protected HPGauge hpGaugeInstance;
     //private const int PlayerLayer = 1 << 6;
     //private const int WallLayer = 1 << 7;
     
@@ -64,6 +64,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         if (UIManager.Instance != null)
         {
             hpGaugeInstance = UIManager.Instance.GetHpGauge(initialScreenPos);
+            hpGaugeInstance.gameObject.SetActive(false);
             hpGaugeInstance.SetTarget(transform);
         }
         UpdateHpGauge();
@@ -137,8 +138,9 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
     
     protected virtual void AttackUpdate()
     {
-        if (generalMonsterData.targetTransform == null)
+        if (generalMonsterData.targetTransform == null || generalMonsterData.targetTransform.gameObject.activeSelf == false)
         {
+            generalMonsterData.targetTransform = null;
             nextState = idleState;
             return;
         }
@@ -169,7 +171,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         if ( currentState != idleState) return;
 
         Collider2D target = Physics2D.OverlapCircle(rb.position,  generalMonsterData.recognizeRadius,  generalMonsterData.targetLayer);
-        if (target != null)
+        if (target != null && target.gameObject.activeSelf == true)
         {
             generalMonsterData.targetTransform = target.transform;
             nextState = attackState;
@@ -215,7 +217,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         }
     }
 
-    private float damageTimer = 0f;
+    protected float damageTimer = 0f;
     protected virtual void OnCollisionStay2D(Collision2D other)
     {
         if (other.gameObject.layer == Mathf.Log(generalMonsterData.targetLayer.value, 2))
@@ -243,15 +245,45 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         //Debug.Log("Attack!");
     }
     
-    public void GetDamaged(float damage, MedicineType medicineType)
+    public virtual void GetDamaged(float damage, MedicineType medicineType)
     {
         if(damage <= 0) return;
-        if( currentState == deathState) return;
+        //if( currentState == deathState) return;
 
-        generalMonsterData.hp -= damage;
+        float caculatedDamage = damage;
+        
+        //Case of resistant medicine
+        if ((medicineType & generalMonsterData.resistantMedicineType) == medicineType)
+        {
+            
+        }
+        
+        //Case of good medicine
+        else if ((medicineType & generalMonsterData.goodMedicineTypes) == medicineType)
+        {
+            
+        }
+        
+        //Case of bad medicine
+        else if ((medicineType & generalMonsterData.badMedicineTypes) == medicineType)
+        {
+            
+        }
+        //default?
+        else
+        {
+            
+        }
+        
+        generalMonsterData.hp -= caculatedDamage;
         generalMonsterData.hp = Mathf.Clamp(generalMonsterData.hp, 0, maxHp);
+        
+        if (hpGaugeInstance != null && !hpGaugeInstance.gameObject.activeSelf)
+        {
+            hpGaugeInstance.gameObject.SetActive(true);
+        }
+        
         UpdateHpGauge();
-        //UIManager.instance.hitDamageInfo.PrintHitDamage(transform, damage);
 
         if ( generalMonsterData.hp <= 0)
         {
@@ -263,7 +295,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
     /// <summary>
     /// 현재 체력 비율에 맞게 HP 게이지를 업데이트합니다.
     /// </summary>
-    private void UpdateHpGauge()
+    protected void UpdateHpGauge()
     {
         if (hpGaugeInstance != null)
         {

@@ -38,7 +38,7 @@ public class Bullet : MonoBehaviour
         //addVector = 100 * new Vector3(direction.x * Time.deltaTime, direction.y * Time.deltaTime, 0);
         addVector = new Vector3(direction.x, direction.y, 0);
         addVector.Normalize();
-        Debug.Log(addVector);
+        //Debug.Log(addVector);
     }
 
     public void getVector(Vector3 from, Vector3 to)
@@ -48,13 +48,23 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.layer == 21)
+        if (other.gameObject.layer == 21) //Enemy
         {
             var enemy = other.gameObject.GetComponent<IDamageable>();
             if (enemy != null)
             {
-                enemy.GetDamaged(2f, MedicineType.Medicine1);
+                enemy.GetDamaged(10f, MedicineType.Medicine1);
             }
         }
+
+        if (other.gameObject.layer == 11) //Cell
+        {
+            var cell = other.gameObject.GetComponent<Cell>();
+            if (cell != null)
+            {
+                cell.GetDamaged(2f);
+            }
+        }
+        
     }
 }
