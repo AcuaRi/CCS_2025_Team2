@@ -62,7 +62,7 @@ public class Bullet : MonoBehaviour
             var cell = other.gameObject.GetComponent<Cell>();
             if (cell != null)
             {
-                cell.GetDamaged(2f);
+                cell.GetDamaged(20f);
             }
         }
         

@@ -27,7 +27,7 @@ MonoBehaviour:
     attackDamage: 5
     divisionCoolTime: 0
     divisionProbability: 0
-    goodMedicineTypes: 1
+    goodMedicineTypes: 0
     badMedicineTypes: 0
     resistantMedicineType: 1
   hp: 100
@@ -44,6 +44,6 @@ MonoBehaviour:
   attackDamage: 5
   divisionCoolTime: 0
   divisionProbability: 0
-  goodMedicineTypes: 1
+  goodMedicineTypes: 0
   badMedicineTypes: 0
   resistantMedicineType: 1

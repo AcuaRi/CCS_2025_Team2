@@ -27,7 +27,7 @@ public class GeneralEnemyData : ScriptableObject
     public float divisionCoolTime;
     public float divisionProbability;
     
-    [Header("Medicine Setting")] [EnumFlags]  
+    [Header("Medicine Setting")]
     public MedicineType goodMedicineTypes;
     public MedicineType badMedicineTypes;
     public MedicineType resistantMedicineType;

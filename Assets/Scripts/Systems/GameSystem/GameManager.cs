@@ -5,9 +5,11 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [Header("Game Settings")]
-    [Tooltip("게임 플레이 시간 (초)")]
+    [Tooltip("Gameplay Time (second)")]
     [SerializeField] private float playTime = 300f;
-    
+    [Tooltip("Body MaxHp")]
+    [SerializeField] private float maxHp;
+    private float currentHp;
     private float remainingTime;
 
     private void Awake()
@@ -18,13 +20,14 @@ public class GameManager : MonoBehaviour
             return;
         }
         Instance = this;
-        
-        // DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
         remainingTime = playTime;
+        
+        currentHp = maxHp;
+        UIManager.Instance.SetBodyHpGaugeUI(currentHp, maxHp);
         
         //EnemyGenerator.Instance.GenerateEnemy("EnemyType1", 10, 5, 5);
         EnemyGenerator.Instance.GenerateEnemy("EnemyType1_Default", 2, 5, 5);
@@ -46,5 +49,13 @@ public class GameManager : MonoBehaviour
         {
             UIManager.Instance.UpdateCountdownUI(remainingTime);
         }
+    }
+    
+    public void GetDamagedInBody(float damage)
+    {
+        if(damage <= 0) return;
+        
+        this.currentHp -= damage;
+        UIManager.Instance.SetBodyHpGaugeUI(currentHp, maxHp);
     }
 }
