@@ -9,6 +9,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
     protected bool isTransition = false;
     protected FSMState idleState;
     protected FSMState attackState;
+    protected FSMState vesselState;
     protected FSMState deathState;
     
     protected FSMState currentState;
@@ -24,8 +25,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
 
     protected float maxHp;
     protected HPGauge hpGaugeInstance;
-    //private const int PlayerLayer = 1 << 6;
-    //private const int WallLayer = 1 << 7;
+    protected bool isInVessel = false;
     
     protected void Awake()
     {
@@ -91,7 +91,8 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
     {
         idleState = new FSMState( IdleEnter, IdleUpdate, null);
         attackState = new FSMState( AttackEnter, AttackUpdate, null);
-        deathState = new FSMState(null, null, null);
+        vesselState = new FSMState( VesselEnter, VesselUpdate, null);
+        deathState = new FSMState(DeathEnter, null, null);
         
         currentState = idleState;
         nextState = idleState;
@@ -99,6 +100,16 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
 
     protected virtual bool TransitionCheck()
     {
+        if (nextState == deathState)
+        {
+            return true;
+        }
+        
+        if (isInVessel && currentState != vesselState)
+        {
+            return true;
+        }
+        
         if (currentState == idleState)
         {
             if (FindTarget)
@@ -146,21 +157,40 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         }
         generalMonsterData.moveDirection = (generalMonsterData.targetTransform.position - transform.position).normalized;
         rb.transform.Translate( generalMonsterData.moveSpeed * Time.deltaTime *  generalMonsterData.moveDirection);
-        sprite.flipX = ( generalMonsterData.targetTransform.position.x < transform.position.x);
-    }
-    /// 
-    
-    protected void TurnBack()
-    {
-        generalMonsterData.moveDirection.x = -generalMonsterData.moveDirection.x;
-        //sprite.flipX = ( generalMonsterData.moveDirection.x < 0 );
+        //sprite.flipX = ( generalMonsterData.targetTransform.position.x < transform.position.x);
     }
 
+    protected virtual void VesselEnter()
+    {
+        this.gameObject.layer = 22; //enemy(Passed)
+        generalMonsterData.moveDirection = (10f * Vector2.left + generalMonsterData.moveDirection).normalized;
+    }
+
+    public virtual void SetVesselState()
+    {
+        if(currentState == vesselState) return;
+        nextState = vesselState;
+        isInVessel = true;
+    }
+    
+    protected virtual void VesselUpdate()
+    {
+        //moveSpeed in Vessel needs to be equal?
+        rb.transform.Translate( 10f * Time.deltaTime *  generalMonsterData.moveDirection);
+    }
+
+    protected virtual void DeathEnter()
+    {
+        
+        Destroy(hpGaugeInstance.gameObject);
+        Destroy(this.gameObject);
+    }
+    
     protected void Move()
     {
         if (DetectObstacle())
         {
-            TurnBack();
+            generalMonsterData.moveDirection.x = -generalMonsterData.moveDirection.x;
         }
         
         rb.transform.Translate( generalMonsterData.moveSpeed * Time.deltaTime *  generalMonsterData.moveDirection);
@@ -194,26 +224,14 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
     protected virtual void OnCollisionEnter2D(Collision2D other)
     {
         if ( currentState == deathState) return;
-        //
-        // if (other.gameObject.layer == 9)
-        // {
-        //     TurnBack();
-        // }
-        //
-        // if (other.gameObject.layer == 6)
-        // {
-        //     other.gameObject.GetComponent<PlayerController>().GetDamaged( generalMonsterData.attackDamage, this.gameObject,
-        //         (((other.transform.position.x > transform.position.x) ? Vector2.right : Vector2.left) + 0.5f * Vector2.up).normalized *  generalMonsterData.knockBackPower);
-        // }
-        
-        if (other.gameObject.layer == Mathf.Log(generalMonsterData.targetLayer.value, 2))
+
+        if (currentState == vesselState)
         {
-            //Debug.Log($"{this.gameObject.name}({other.gameObject.name}) is detected");
-            //Destroy(other.gameObject);
+            generalMonsterData.moveDirection.y = -generalMonsterData.moveDirection.y;
         }
         else
         {
-            TurnBack();
+            generalMonsterData.moveDirection.x = -generalMonsterData.moveDirection.x;
         }
     }
 
@@ -248,7 +266,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
     public virtual void GetDamaged(float damage, MedicineType medicineType)
     {
         if(damage <= 0) return;
-        //if( currentState == deathState) return;
+        if( currentState == deathState) return;
 
         float caculatedDamage = damage;
         
@@ -287,8 +305,9 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
 
         if ( generalMonsterData.hp <= 0)
         {
-            Destroy(hpGaugeInstance.gameObject);
-            Destroy(this.gameObject);
+            nextState = deathState;
+            //Destroy(hpGaugeInstance.gameObject);
+            //Destroy(this.gameObject);
         }
     }
     
