@@ -1,10 +1,11 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HPGauge : MonoBehaviour
 {
     [SerializeField] private Image fillImage;       // 채워지는 이미지
-
+    
     // 따라다닐 대상과 월드상의 오프셋 (예: 적의 위쪽)
     private Transform target;
     public Vector3 worldOffset = new Vector3(0f, 1f, 0f);

@@ -31,6 +31,8 @@ public class GeneralEnemyData : ScriptableObject
     public MedicineType goodMedicineTypes;
     public MedicineType badMedicineTypes;
     public MedicineType resistantMedicineType;
+
+    [Header("Point Setting")] public int points;
     
     //Sync SO class variable to struct data (for deep copy)
     public void SyncData()
@@ -55,5 +57,7 @@ public class GeneralEnemyData : ScriptableObject
         data.goodMedicineTypes = goodMedicineTypes;
         data.badMedicineTypes = badMedicineTypes;
         data.resistantMedicineType = resistantMedicineType;
+        
+        data.points = points;
     }
 }

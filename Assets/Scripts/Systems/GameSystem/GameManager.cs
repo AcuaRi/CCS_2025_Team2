@@ -29,11 +29,8 @@ public class GameManager : MonoBehaviour
         currentHp = maxHp;
         UIManager.Instance.SetBodyHpGaugeUI(currentHp, maxHp);
         
-        //EnemyGenerator.Instance.GenerateEnemy("EnemyType1", 10, 5, 5);
-        EnemyGenerator.Instance.GenerateEnemy("EnemyType1_Default", 2, 5, 5);
-        EnemyGenerator.Instance.GenerateEnemy("EnemyType1_Resistant", 2, 5, 5);
         EnemyGenerator.Instance.GenerateEnemy("EnemyType1_Good", 2, 5, 5);
-        EnemyGenerator.Instance.GenerateEnemy("EnemyType1_Bad", 2, 5, 5);
+        EnemyGenerator.Instance.GenerateEnemy("EnemyType2_Good", 2, 5, 5);
     }
 
     private void FixedUpdate()

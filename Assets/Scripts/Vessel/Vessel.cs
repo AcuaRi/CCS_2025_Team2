@@ -9,7 +9,7 @@ public class Vessel : MonoBehaviour
     {
         if (other.gameObject.layer == 21) //Enemy
         {
-            var enemy = other.gameObject.GetComponent<GeneralEnemy>();
+            var enemy = other.gameObject.GetComponentInParent<GeneralEnemy>();
             if (enemy != null)
             {
                 enemy.SetVesselState();

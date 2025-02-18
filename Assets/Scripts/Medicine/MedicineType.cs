@@ -11,4 +11,7 @@ public enum MedicineType
     Medicine5 = 1 << 4,
     Medicine6 = 1 << 5,
     Medicine7 = 1 << 6,
+    Medicine8 = 1 << 7,
+    Medicine9 = 1 << 8,
+    Medicine0 = 1 << 9,
 }

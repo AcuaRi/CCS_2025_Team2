@@ -80,7 +80,7 @@ public class EnemyGenerator : MonoBehaviour
             {
                 float randomX = Random.Range(-spawnWidth / 2f, spawnWidth / 2f);
                 Vector3 spawnPos = spawnOrigin.position + new Vector3(randomX, 0f, 0f);
-                Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+                Instantiate(enemyPrefab, spawnPos, enemyPrefab.transform.rotation);
             }
             yield return new WaitForSeconds(generateInterval);
         }

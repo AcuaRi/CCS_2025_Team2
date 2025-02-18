@@ -165,4 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fillImage: {fileID: 3393291541605570872}
+  goodText: {fileID: 0}
+  badText: {fileID: 0}
+  resistantText: {fileID: 0}
   worldOffset: {x: 0, y: 1, z: 0}

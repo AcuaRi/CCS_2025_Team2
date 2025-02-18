@@ -2,10 +2,22 @@ using UnityEngine;
 
 public class EnemyType1 : GeneralEnemy
 {
-    public override void GetDamaged(float damage, MedicineType medicineType)
+    protected override void RegisterDisease()
+    {
+        DiseaseManager.Instance.Register(0);
+    }
+
+    protected override void UnregisterDisease()
+    {
+        DiseaseManager.Instance.Unregister(0);
+    }
+
+    public override void GetDamaged(float damage, MedicineType medicineType, Vector2 force)
     {
         if(damage <= 0) return;
-
+        if( currentState == deathState) return;
+        
+        
         float caculatedDamage = damage;
         
         //Case of resistant medicine
@@ -31,10 +43,6 @@ public class EnemyType1 : GeneralEnemy
             
         }
         
-        //Debug.Log(generalMonsterData.goodMedicineTypes);
-        //Debug.Log(generalMonsterData.badMedicineTypes);
-        //Debug.Log(generalMonsterData.resistantMedicineType);
-        //Debug.Log("CaculatedDamage: " + caculatedDamage);
         generalMonsterData.hp -= caculatedDamage;
         generalMonsterData.hp = Mathf.Clamp(generalMonsterData.hp, 0, maxHp);
         
@@ -44,12 +52,20 @@ public class EnemyType1 : GeneralEnemy
         }
         
         UpdateHpGauge();
-
+        if (force.magnitude > 0.1f)
+        {
+            rb.AddForce(force, (ForceMode2D)ForceMode.Impulse);
+        }
         
         if ( generalMonsterData.hp <= 0)
         {
-            Destroy(hpGaugeInstance.gameObject);
-            Destroy(this.gameObject);
+            nextState = deathState;
+        }
+        
+        //increase resistance of medicine
+        if (medicineType != MedicineType.None)
+        {
+            medicineResistantProbablity[(int)Mathf.Log((int)medicineType, 2)] += 0.1f;
         }
     }
 }

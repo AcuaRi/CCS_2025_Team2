@@ -8,8 +8,9 @@ public class VesselTeleport : MonoBehaviour
     {
         if (other.gameObject.layer == 22) //Enemy(Passed)
         {
-            other.transform.position = new Vector3(teleportTo.position.x, other.transform.position.y, other.transform.position.z);
-            other.GetComponent<IDamageable>().GetDamaged(30f, MedicineType.Medicine7);
+            var parent = other.transform.parent;
+            parent.position = new Vector3(teleportTo.position.x, other.transform.position.y, other.transform.position.z);
+            parent.GetComponent<IDamageable>().GetDamaged(30f);
             
             //Remove This
             GameManager.Instance.GetDamagedInBody(1f);

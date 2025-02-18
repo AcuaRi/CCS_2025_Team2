@@ -1,16 +1,40 @@
+using System;
 using UnityEngine;
 using System.Collections;
+using Random = UnityEngine.Random;
 
-public class Cell : MonoBehaviour
+public class Cell : MonoBehaviour, IDamageable
 {
     // 細胞の初期HP（希望する値に設定）
     [SerializeField] private float hp = 100f;
-
+    private float currentHp;
+    
     // 揺れの強さ（お好みの値に調整）
     [SerializeField] private float shakeAmount = 0.25f;
 
     // 被撃効果重複実行防止用フラッグ
-    private bool isHitEffectPlaying = false;
+    private bool _isHitEffectPlaying = false;
+
+    [SerializeField] private int recoveryTime = 30;
+    private int _recoveryTimer = 0;
+    public int RecoveryTimer => _recoveryTimer;
+
+    private Color _originalColor;
+    private Vector3 _originalPosition;
+    private SpriteRenderer _sr;
+    
+    private void Start()
+    {
+        currentHp = hp;
+        _originalPosition = transform.position;
+        _originalColor = GetComponent<SpriteRenderer>().color;
+        _sr = GetComponent<SpriteRenderer>();
+    }
+
+    public void GetDamaged(float damage, MedicineType medicineType, Vector2 force)
+    {
+        GetDamaged(damage);
+    }
 
     /// <summary>
     /// ダメージを受けてHPを減少させ、HPが0以下であればオブジェクトを破壊
@@ -21,17 +45,17 @@ public class Cell : MonoBehaviour
     {
         if(damage <= 0) return;
         
-        hp -= damage;
+        currentHp -= damage;
         //Debug.Log("ダメージを受けました。 現在HP: " + hp);
 
-        if (!isHitEffectPlaying)
-        {
-            StartCoroutine(HitEffect());
-        }
-
-        if (hp <= 0f)
+        if (currentHp <= 0f)
         {
             DestroyCell();
+        }
+        
+        if (!_isHitEffectPlaying && this.gameObject.activeSelf)
+        {
+            StartCoroutine(HitEffect());
         }
     }
 
@@ -40,8 +64,30 @@ public class Cell : MonoBehaviour
     /// </summary>
     private void DestroyCell()
     {
-        //Destroy(gameObject);
+        transform.position = _originalPosition;
+        _sr.color = _originalColor;
+        _isHitEffectPlaying = false;
+        ResetRecoveryTimer();
         this.gameObject.SetActive(false);
+    }
+
+    public void ResetRecoveryTimer()
+    {
+        _recoveryTimer = recoveryTime;
+    }
+    
+    public void DecreaseRecoveryTimer(int seconds)
+    {
+        _recoveryTimer -= seconds;
+        _recoveryTimer = Mathf.Clamp(_recoveryTimer, 0, int.MaxValue);
+    }
+    
+    public void RecoveryCell()
+    {
+        currentHp = hp;
+        
+        this.gameObject.SetActive(true);
+        _recoveryTimer = 0;
     }
 
     /// <summary>
@@ -49,18 +95,14 @@ public class Cell : MonoBehaviour
     /// </summary>
     private IEnumerator HitEffect()
     {
-        isHitEffectPlaying = true;
+        _isHitEffectPlaying = true;
         
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
-        if (sr == null)
+        if (_sr == null)
         {
             yield break;
         }
         
-        Color originalColor = sr.color;
-        Vector3 originalPosition = transform.position;
-        
-        sr.color = Color.red;
+        _sr.color = Color.red;
 
         float effectDuration = 0.25f;
         float elapsed = 0f;
@@ -68,15 +110,15 @@ public class Cell : MonoBehaviour
         while (elapsed < effectDuration)
         {
             Vector2 randomOffset = Random.insideUnitCircle * shakeAmount;
-            transform.position = originalPosition + new Vector3(randomOffset.x, randomOffset.y, 0f);
+            transform.position = _originalPosition + new Vector3(randomOffset.x, randomOffset.y, 0f);
 
             elapsed += Time.deltaTime;
             yield return null;
         }
         
-        transform.position = originalPosition;
-        sr.color = originalColor;
+        transform.position = _originalPosition;
+        _sr.color = _originalColor;
 
-        isHitEffectPlaying = false;
+        _isHitEffectPlaying = false;
     }
 }

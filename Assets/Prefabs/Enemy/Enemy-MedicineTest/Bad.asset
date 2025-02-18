@@ -42,8 +42,8 @@ MonoBehaviour:
   knockBackPower: 0
   attackSpeed: 5
   attackDamage: 5
-  divisionCoolTime: 0
-  divisionProbability: 0
+  divisionCoolTime: 10
+  divisionProbability: 0.2
   goodMedicineTypes: 0
   badMedicineTypes: 1
   resistantMedicineType: 0

@@ -24,4 +24,6 @@ public struct GeneralEnemyDataStruct
     public MedicineType goodMedicineTypes;
     public MedicineType badMedicineTypes;
     public MedicineType resistantMedicineType;
+
+    public int points;
 }

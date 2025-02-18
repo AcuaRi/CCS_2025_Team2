@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GeneralEnemy : MonoBehaviour, IDamageable
@@ -21,11 +22,16 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
     [SerializeField] protected SpriteRenderer sprite;
     [SerializeField] protected Animator animator;
     [SerializeField] protected Rigidbody2D rb;
+    [SerializeField] protected Transform bodyTransform;
     [SerializeField] protected GeneralEnemyData refData;
 
     protected float maxHp;
     protected HPGauge hpGaugeInstance;
     protected bool isInVessel = false;
+    
+    protected float[] medicineResistantProbablity = new float[10];
+    
+    
     
     protected void Awake()
     {
@@ -41,7 +47,12 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         
         if (sprite == null)
         {
-            sprite = GetComponent<SpriteRenderer>();
+            sprite = GetComponentInChildren<SpriteRenderer>();
+        }
+
+        if (bodyTransform == null)
+        {
+            bodyTransform = GetComponentInChildren<Transform>();
         }
         
         refData.SyncData();
@@ -69,6 +80,9 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         }
         UpdateHpGauge();
         IdleEnter();
+        
+        if(generalMonsterData.divisionCoolTime <= 0) return;
+        Invoke("Division", generalMonsterData.divisionCoolTime);
     }
 
     protected void FixedUpdate()
@@ -91,7 +105,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
     {
         idleState = new FSMState( IdleEnter, IdleUpdate, null);
         attackState = new FSMState( AttackEnter, AttackUpdate, null);
-        vesselState = new FSMState( VesselEnter, VesselUpdate, null);
+        vesselState = new FSMState( VesselEnter, VesselUpdate, VesselExit);
         deathState = new FSMState(DeathEnter, null, null);
         
         currentState = idleState;
@@ -132,7 +146,10 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
 
     protected virtual void IdleEnter()
     {
+        rb.velocity = Vector2.zero;
         generalMonsterData.moveDirection = ( Vector2.right * Random.Range(-1f, 1f) + Vector2.down * Random.Range(0.5f, 1f)).normalized;
+        bodyTransform.up = -generalMonsterData.moveDirection;
+        GetSnappedRotation(generalMonsterData.moveDirection);
         Invoke("CheckTarget", 0.25f);
     }
     
@@ -155,15 +172,33 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
             nextState = idleState;
             return;
         }
+
+        if (Vector2.Distance(generalMonsterData.targetTransform.position, transform.position) >
+            1.5f * generalMonsterData.recognizeRadius)
+        {
+            generalMonsterData.targetTransform = null;
+            nextState = idleState;
+            return;
+        }
+        
         generalMonsterData.moveDirection = (generalMonsterData.targetTransform.position - transform.position).normalized;
+        GetSnappedRotation(generalMonsterData.moveDirection);
         rb.transform.Translate( generalMonsterData.moveSpeed * Time.deltaTime *  generalMonsterData.moveDirection);
-        //sprite.flipX = ( generalMonsterData.targetTransform.position.x < transform.position.x);
     }
 
     protected virtual void VesselEnter()
     {
         this.gameObject.layer = 22; //enemy(Passed)
-        generalMonsterData.moveDirection = (10f * Vector2.left + generalMonsterData.moveDirection).normalized;
+        bodyTransform.gameObject.layer = 22;
+        
+        generalMonsterData.moveDirection = (3f * Vector2.left + generalMonsterData.moveDirection).normalized;
+        GetSnappedRotation(generalMonsterData.moveDirection);
+        RegisterDisease();
+    }
+    
+    protected virtual void RegisterDisease()
+    {
+        
     }
 
     public virtual void SetVesselState()
@@ -179,9 +214,20 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         rb.transform.Translate( 10f * Time.deltaTime *  generalMonsterData.moveDirection);
     }
 
-    protected virtual void DeathEnter()
+    protected virtual void VesselExit()
+    {
+        isInVessel = false;
+        UnregisterDisease();
+    }
+    
+    protected virtual void UnregisterDisease()
     {
         
+    }   
+
+    protected virtual void DeathEnter()
+    {
+        SlotSelectMock.Instance.IncreaseCurrentPoints(generalMonsterData.points);
         Destroy(hpGaugeInstance.gameObject);
         Destroy(this.gameObject);
     }
@@ -191,6 +237,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         if (DetectObstacle())
         {
             generalMonsterData.moveDirection.x = -generalMonsterData.moveDirection.x;
+            GetSnappedRotation(generalMonsterData.moveDirection);
         }
         
         rb.transform.Translate( generalMonsterData.moveSpeed * Time.deltaTime *  generalMonsterData.moveDirection);
@@ -206,6 +253,12 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
             generalMonsterData.targetTransform = target.transform;
             nextState = attackState;
             FindTarget = true;
+        }
+        else
+        {
+            rb.velocity = Vector2.zero;
+            generalMonsterData.moveDirection = ( Vector2.right * Random.Range(-1f, 1f) + Vector2.down * Random.Range(0.5f, 1f)).normalized;
+            GetSnappedRotation(generalMonsterData.moveDirection);
         }
         
         Invoke("CheckTarget", 0.25f);
@@ -233,23 +286,32 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         {
             generalMonsterData.moveDirection.x = -generalMonsterData.moveDirection.x;
         }
+        
+        GetSnappedRotation(generalMonsterData.moveDirection);
+        
+        if (other.gameObject.layer == 30)
+        {
+            var target = other.gameObject.GetComponent<IDamageable>();
+            if (target != null)
+            {
+                target.GetDamaged(generalMonsterData.attackDamage);
+            }
+        }
     }
 
     protected float damageTimer = 0f;
     protected virtual void OnCollisionStay2D(Collision2D other)
     {
-        if (other.gameObject.layer == Mathf.Log(generalMonsterData.targetLayer.value, 2))
+        if (other.gameObject.layer == Mathf.Log(generalMonsterData.targetLayer.value, 2) || other.gameObject.layer == 30) // 30 : Player
         {
             damageTimer += Time.deltaTime;
-
-            // 누적된 시간이 1초 이상이면 데미지를 적용
+            
             if (damageTimer >= 1f)
             {
-                // 충돌한 대상의 Cell 컴포넌트를 가져와 데미지를 입힘
-                var cell = other.gameObject.GetComponent<Cell>();
-                if (cell != null)
+                var target = other.gameObject.GetComponent<IDamageable>();
+                if (target != null)
                 {
-                    cell.GetDamaged(generalMonsterData.attackDamage);
+                    target.GetDamaged(generalMonsterData.attackDamage);
                 }
 
                 // 타이머 초기화
@@ -262,8 +324,31 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
     {
         //Debug.Log("Attack!");
     }
+
+    public virtual void GetDamaged(float damage)
+    {
+        if(damage <= 0) return;
+        if( currentState == deathState) return;
+
+        float caculatedDamage = damage;
+        
+        generalMonsterData.hp -= caculatedDamage;
+        generalMonsterData.hp = Mathf.Clamp(generalMonsterData.hp, 0, maxHp);
+        
+        if (hpGaugeInstance != null && !hpGaugeInstance.gameObject.activeSelf)
+        {
+            hpGaugeInstance.gameObject.SetActive(true);
+        }
+        
+        UpdateHpGauge();
+
+        if ( generalMonsterData.hp <= 0)
+        {
+            nextState = deathState;
+        }
+    }
     
-    public virtual void GetDamaged(float damage, MedicineType medicineType)
+    public virtual void GetDamaged(float damage, MedicineType medicineType, Vector2 force)
     {
         if(damage <= 0) return;
         if( currentState == deathState) return;
@@ -322,4 +407,56 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
             hpGaugeInstance.SetHpGauge(percent);
         }
     }
+
+    protected void Division()
+    {
+        if (generalMonsterData.hp <= 0) return;
+        if (isInVessel) return;
+        
+        var random = Random.Range(0f, 1f);
+        if (random < generalMonsterData.divisionProbability)
+        {
+            var division = Instantiate(this.gameObject, this.transform.position, this.transform.rotation);
+            division.GetComponent<GeneralEnemy>().AcquireResistant(RollTheDiceOfResistant());
+        }
+        
+        if(generalMonsterData.divisionCoolTime <= 0) return;
+        Invoke("Division", generalMonsterData.divisionCoolTime);
+    }
+
+    protected void AcquireResistant(MedicineType acquiredResistant)
+    {
+        generalMonsterData.resistantMedicineType = generalMonsterData.resistantMedicineType | acquiredResistant;
+    }
+
+    protected MedicineType RollTheDiceOfResistant()
+    { 
+        MedicineType acquiredResistant = MedicineType.None;
+        
+        for (int i = 0; i < medicineResistantProbablity.Length; i++)
+        {
+            var random = Random.Range(0f, 1f);
+         
+            if (random < medicineResistantProbablity[i])
+            {
+                acquiredResistant = acquiredResistant | (MedicineType)(1 << i);
+            }
+        }
+        
+        return acquiredResistant;
+    }
+    
+    void GetSnappedRotation(Vector2 movementDirection)
+    {
+        //bodyTransform.up = -movementDirection;
+        // 목표 회전값을 계산: -movementDirection 방향이 bodyTransform의 up 방향이 되도록 함
+        Quaternion desiredRotation = Quaternion.LookRotation(Vector3.forward, -movementDirection);
+    
+        // 초당 90도 회전 (필요에 따라 rotationSpeed 값을 조절하세요)
+        float rotationSpeed = 45;
+    
+        // 현재 회전에서 목표 회전으로 부드럽게 회전
+        bodyTransform.rotation = Quaternion.RotateTowards(bodyTransform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+    }
+    
 }
