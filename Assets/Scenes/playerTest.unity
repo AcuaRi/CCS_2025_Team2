@@ -122,6 +122,74 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &28739378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 28739381}
+  - component: {fileID: 28739380}
+  - component: {fileID: 28739379}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &28739379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28739378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &28739380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28739378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &28739381
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28739378}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &119178328
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,8 +479,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerHP: 0
   _playerSpeed: 3
-  bulletPrefab: {fileID: 1913493599678101969, guid: 4b36314ac0e3e35488fbd4a17abf07c0, type: 3}
-  poolSize: 20
+  bullet: {fileID: 1913493599678101969, guid: 4b36314ac0e3e35488fbd4a17abf07c0, type: 3}
+  _medicineType: 1
+  bulletPrefabs:
+  - {fileID: 1913493599678101969, guid: 4b36314ac0e3e35488fbd4a17abf07c0, type: 3}
+  - {fileID: 587113886386202237, guid: beb2b68eeb6af7d43850238eae7cdabe, type: 3}
+  - {fileID: 3107663142827282274, guid: 1333a05940f56a442ad70d9164535365, type: 3}
+  - {fileID: 5362781947725581326, guid: f63bbe510968f7742ada1b92f1c98421, type: 3}
+  - {fileID: 5362781947725581326, guid: f63bbe510968f7742ada1b92f1c98421, type: 3}
+  - {fileID: 5362781947725581326, guid: f63bbe510968f7742ada1b92f1c98421, type: 3}
+  - {fileID: 5362781947725581326, guid: f63bbe510968f7742ada1b92f1c98421, type: 3}
+  - {fileID: 5362781947725581326, guid: f63bbe510968f7742ada1b92f1c98421, type: 3}
+  - {fileID: 5362781947725581326, guid: f63bbe510968f7742ada1b92f1c98421, type: 3}
+  - {fileID: 5362781947725581326, guid: f63bbe510968f7742ada1b92f1c98421, type: 3}
+  _firingrate:
+  - 0.3
+  - 0.4
+  - 0.5
+  - 0.2
+  - 0.2
+  - 0.2
+  - 0.2
+  - 0.2
+  - 0.2
+  - 0.2
+  shootingModes: 00000000010000000200000000000000000000000000000000000000000000000000000000000000
 --- !u!114 &1269399670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -514,6 +605,26 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: faf23a21-87be-493f-bd2d-6274fbc7812e
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1269399669}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: _OnRelease
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a7310afb-141e-4358-b9b9-2c90d23af378
+    m_ActionName: Player/OffFire[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ad01b972-1683-432e-ae0e-7a0eb8f6bf86
+    m_ActionName: Player/BothFire
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -556,3 +667,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 119178331}
   - {fileID: 1269399668}
+  - {fileID: 28739381}

@@ -29,7 +29,25 @@
                     "id": "29bb2403-afe6-49ce-9a43-1bddeee07834",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "OffFire",
+                    "type": "Button",
+                    "id": "a7310afb-141e-4358-b9b9-2c90d23af378",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "BothFire",
+                    "type": "Button",
+                    "id": "ad01b972-1683-432e-ae0e-7a0eb8f6bf86",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
                     "initialStateCheck": false
                 }
             ],
@@ -251,6 +269,28 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "67d46d69-6746-4b4f-b0a4-bcedc00accf7",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "OffFire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7e95f69e-c879-4cb1-822a-4ef1fca15383",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BothFire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
