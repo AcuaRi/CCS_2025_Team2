@@ -229,7 +229,7 @@ public class Player : MonoBehaviour, IDamageable
         _shootingCoroutine = null;
     }
 
-    public int GetPlayerHP()
+    public float GetPlayerHP()
     {
         return _playerHP;
     }
