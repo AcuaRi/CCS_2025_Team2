@@ -57,6 +57,15 @@ public class Bullet : MonoBehaviour
                 enemy.GetDamaged(10f, MedicineType.Medicine1, 20f * (other.transform.position - transform.position).normalized);
             }
         }
+        
+        if (other.gameObject.layer == 22) //Enemy
+        {
+            var enemy = other.gameObject.GetComponent<IDamageable>();
+            if (enemy != null)
+            {
+                enemy.GetDamaged(10f, MedicineType.Medicine1, Vector2.zero);
+            }
+        }
 
         if (other.gameObject.layer == 11) //Cell
         {
