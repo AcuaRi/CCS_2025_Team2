@@ -20,6 +20,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image bodyHpGaugeImage;
     [Tooltip("BodyHpGauge Text")]
     [SerializeField] private TextMeshProUGUI bodyHpGaugeText;
+    [Tooltip("Enemy HpGaugeParent Transform")]
+    [SerializeField] private Transform EnemyHpGaugeParent;
     [Tooltip("Countdown text (TextMeshProUGUI)")]
     [SerializeField] private TextMeshProUGUI countdownText;
     [Tooltip("Slot Image")]
@@ -79,7 +81,7 @@ public class UIManager : MonoBehaviour
         {
             parent = screenSpaceCanvas.transform;
         }
-        GameObject gaugeObj = Instantiate(hpGaugePrefab, position, Quaternion.identity, parent);
+        GameObject gaugeObj = Instantiate(hpGaugePrefab, position, Quaternion.identity, EnemyHpGaugeParent);
         HPGauge hpGauge = gaugeObj.GetComponent<HPGauge>();
         if (hpGauge == null)
         {
