@@ -109,6 +109,8 @@ public class Cell : MonoBehaviour, IDamageable
 
         while (elapsed < effectDuration)
         {
+            yield return new WaitUntil(() => Time.timeScale > 0);
+            
             Vector2 randomOffset = Random.insideUnitCircle * shakeAmount;
             transform.position = _originalPosition + new Vector3(randomOffset.x, randomOffset.y, 0f);
 

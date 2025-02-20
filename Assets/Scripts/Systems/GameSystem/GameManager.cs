@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,7 +12,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float maxHp;
     private float currentHp;
     private float remainingTime;
-
+    private bool isPaused = false;
+    public bool IsPaused => isPaused;
+    
+    
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -31,6 +35,22 @@ public class GameManager : MonoBehaviour
         
         EnemyGenerator.Instance.GenerateEnemy("EnemyType1_Good", 2, 5, 5);
         EnemyGenerator.Instance.GenerateEnemy("EnemyType2_Good", 2, 5, 5);
+    }
+    
+    
+
+    void Update()
+    {
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            TogglePause();
+        }
+    }
+
+    void TogglePause()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = isPaused ? 0f : 1f;
     }
 
     private void FixedUpdate()

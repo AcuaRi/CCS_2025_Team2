@@ -101,11 +101,19 @@ public class Player : MonoBehaviour, IDamageable
 
     public void _OnMove(InputAction.CallbackContext context)
     {
+        if (GameManager.Instance.IsPaused == true)
+        {
+            return;
+        }
         _input = context.ReadValue<Vector2>();
     }
 
     public void _OnFire(InputAction.CallbackContext context)
     {
+        if (GameManager.Instance.IsPaused == true)
+        {
+            return;
+        }
         if (context.performed)
         {
             if(!isAlive) return;
@@ -117,6 +125,10 @@ public class Player : MonoBehaviour, IDamageable
 
     public void _OnRelease(InputAction.CallbackContext context)
     {
+        if (GameManager.Instance.IsPaused == true)
+        {
+            return;
+        }
         if (context.canceled)
         {
             _isShooting= false;
@@ -138,6 +150,10 @@ public class Player : MonoBehaviour, IDamageable
 
     private void _Move()
     {
+        if (GameManager.Instance.IsPaused == true)
+        {
+            return;
+        }
         _rb.velocity = new Vector2(_input.x * _playerSpeed, _input.y * _playerSpeed);
     }
 
