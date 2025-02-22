@@ -173,3 +173,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 100
   shakeAmount: 0.25
+  recoveryTime: 30

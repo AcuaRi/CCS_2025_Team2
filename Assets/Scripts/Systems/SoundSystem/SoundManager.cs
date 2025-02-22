@@ -12,20 +12,22 @@ public class AudioData
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager instance;
+    public static SoundManager Instance;
     
-    public AudioData[] soundResources;
+    [SerializeField] private AudioData[] soundResources;
     private Dictionary<string, AudioClip> soundDB = new();
 
-    public int poolSize;
-    public GameObject soundNodePrefab;
+    [SerializeField] private int poolSize;
+    [SerializeField] private GameObject soundNodePrefab;
     private Queue<AudioNode> soundPool = new();
+    
+    [SerializeField] private AudioSource audioSource_BGM;
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
             
             foreach (var soundResource in soundResources)
@@ -44,7 +46,7 @@ public class SoundManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-    
+
     private void MakeNode()
     {
         var audioNode = Instantiate(soundNodePrefab, transform).GetComponent<AudioNode>();
@@ -93,6 +95,32 @@ public class SoundManager : MonoBehaviour
         node.transform.SetParent(parent);
         node.transform.localPosition = Vector2.zero;
         node.Play(soundDB[key]);
+    }
+    
+    public void PlayBGM(string key)
+    {
+        if (!soundDB.ContainsKey(key))
+        {
+            Debug.LogError($"Unknown SoundDB key( )");
+            StopBGM();
+            return;
+        }
+        
+        SetBGM(soundDB[key]);
+    }
+    
+    public void StopBGM()
+    {
+        audioSource_BGM.Stop();
+        audioSource_BGM.clip = null;
+    }
+    
+    public void SetBGM(AudioClip bgm)
+    {
+        audioSource_BGM.Stop();
+        audioSource_BGM.clip = bgm;
+        audioSource_BGM.Play();
+        audioSource_BGM.loop = true;
     }
 }
 

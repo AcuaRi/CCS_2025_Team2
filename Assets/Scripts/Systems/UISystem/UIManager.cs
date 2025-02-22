@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
     [Header("Prefabs")]
     [Tooltip("HPGauge Prefab")]
     [SerializeField] private GameObject hpGaugePrefab;
+    [Tooltip("Resistant Shield Prefab")]
+    [SerializeField] private GameObject resistantShieldPrefab;
     
     [Header("UI Elements")]
     [Tooltip("BodyHpGauge Image")]
@@ -22,6 +24,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bodyHpGaugeText;
     [Tooltip("Enemy HpGaugeParent Transform")]
     [SerializeField] private Transform EnemyHpGaugeParent;
+    [Tooltip("Resistant Shield Parent Transform")]
+    [SerializeField] private Transform resistantShieldParent;
     [Tooltip("Countdown text (TextMeshProUGUI)")]
     [SerializeField] private TextMeshProUGUI countdownText;
     [Tooltip("Slot Image")]
@@ -50,6 +54,31 @@ public class UIManager : MonoBehaviour
     {
         SelectSlot(selectedSlotIndex);
     }
+    
+    /// <summary>
+    /// Instantiate ResistantShield Prefab at ResistantShieldUIParent and Return the ResistantShield Component
+    /// </summary>
+    /// <param name="position">initial position (screen position)</param>
+    /// <returns>ResistantShield Component</returns>
+    public ResistantShield GetResistantShield(Vector3 position)
+    {
+        if (screenSpaceCanvas == null)
+        {
+            Debug.LogError("Screen Space Canvas is null");
+            return null;
+        }
+            
+        GameObject gaugeObj = Instantiate(resistantShieldPrefab, position, Quaternion.identity, resistantShieldParent);
+        ResistantShield resistantShield = gaugeObj.GetComponent<ResistantShield>();
+            
+        if (resistantShield == null)
+        {
+            Debug.LogError("No ResistantShield Component in the Prefab");
+        }
+            
+        return resistantShield;
+    }
+        
 
     public void SetBodyHpGaugeUI(float currentHp, float maxHp)
     {
@@ -65,27 +94,23 @@ public class UIManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Screen Space Overlay Canvas 하위에 HP 게이지 프리팹을 인스턴스화하여 반환합니다.
+    /// Instantiate HPGauge Prefab at HPGaugeUIParent and Return the HPGauge Component
     /// </summary>
-    /// <param name="position">초기 위치 (화면 좌표)</param>
-    /// <param name="parent">부모 Transform (기본은 screenSpaceCanvas.transform)</param>
-    /// <returns>생성된 HPGauge 컴포넌트</returns>
-    public HPGauge GetHpGauge(Vector3 position, Transform parent = null)
+    /// <param name="position">initial position (screen position)</param>
+    /// <returns>HPGauge Component</returns>
+    public HPGauge GetHpGauge(Vector3 position)
     {
         if (screenSpaceCanvas == null)
         {
-            Debug.LogError("Screen Space Canvas가 할당되지 않았습니다.");
+            Debug.LogError("Screen Space Canvas is null");
             return null;
         }
-        if (parent == null)
-        {
-            parent = screenSpaceCanvas.transform;
-        }
+        
         GameObject gaugeObj = Instantiate(hpGaugePrefab, position, Quaternion.identity, EnemyHpGaugeParent);
         HPGauge hpGauge = gaugeObj.GetComponent<HPGauge>();
         if (hpGauge == null)
         {
-            Debug.LogError("생성된 프리팹에 HPGauge 컴포넌트가 없습니다.");
+            Debug.LogError("No HPGauge Component in the Prefab");
         }
         return hpGauge;
     }

@@ -27,6 +27,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
 
     protected float maxHp;
     protected HPGauge hpGaugeInstance;
+    protected ResistantShield shieldInstance;
     protected bool isInVessel = false;
     
     protected float[] medicineResistantProbablity = new float[10];
@@ -77,8 +78,15 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
             hpGaugeInstance = UIManager.Instance.GetHpGauge(initialScreenPos);
             hpGaugeInstance.gameObject.SetActive(false);
             hpGaugeInstance.SetTarget(transform);
+            
+            if (generalMonsterData.resistantMedicineType != MedicineType.None && shieldInstance == null)
+            {
+                shieldInstance = UIManager.Instance.GetResistantShield(initialScreenPos);
+                shieldInstance.SetTarget(transform);
+            }
         }
         UpdateHpGauge();
+        
         IdleEnter();
         
         if(generalMonsterData.divisionCoolTime <= 0) return;
@@ -229,6 +237,10 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
     {
         SlotSelectMock.Instance.IncreaseCurrentPoints(generalMonsterData.points);
         Destroy(hpGaugeInstance.gameObject);
+        if (shieldInstance != null)
+        {
+            Destroy(shieldInstance.gameObject);
+        }
         Destroy(this.gameObject);
     }
     
@@ -352,30 +364,35 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
     {
         if(damage <= 0) return;
         if( currentState == deathState) return;
-
+        
+        
         float caculatedDamage = damage;
         
         //Case of resistant medicine
         if ((medicineType & generalMonsterData.resistantMedicineType) == medicineType)
         {
-            
+            caculatedDamage = damage / 10;
+            SoundManager.Instance.PlaySound("GetDamaged_Bad", transform.position);
         }
         
         //Case of good medicine
         else if ((medicineType & generalMonsterData.goodMedicineTypes) == medicineType)
         {
-            
+            caculatedDamage = damage * 5;
+            SoundManager.Instance.PlaySound("GetDamaged_Good", transform.position);
+            //SoundManager.Instance.PlaySound("Test", transform.position);
         }
         
         //Case of bad medicine
         else if ((medicineType & generalMonsterData.badMedicineTypes) == medicineType)
         {
-            
+            caculatedDamage = damage / 10;
+            SoundManager.Instance.PlaySound("GetDamaged_Bad", transform.position);
         }
         //default?
         else
         {
-            
+            SoundManager.Instance.PlaySound("GetDamaged_Default", transform.position);
         }
         
         generalMonsterData.hp -= caculatedDamage;
@@ -387,12 +404,20 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         }
         
         UpdateHpGauge();
-
+        if (force.magnitude > 0.1f)
+        {
+            rb.AddForce(force, (ForceMode2D)ForceMode.Impulse);
+        }
+        
         if ( generalMonsterData.hp <= 0)
         {
             nextState = deathState;
-            //Destroy(hpGaugeInstance.gameObject);
-            //Destroy(this.gameObject);
+        }
+        
+        //increase resistance of medicine
+        if (medicineType != MedicineType.None)
+        {
+            medicineResistantProbablity[(int)Mathf.Log((int)medicineType, 2)] += 0.1f;
         }
     }
     
@@ -426,6 +451,43 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
 
     protected void AcquireResistant(MedicineType acquiredResistant)
     {
+        if (acquiredResistant != MedicineType.None && shieldInstance == null)
+        {
+            shieldInstance = UIManager.Instance.GetResistantShield(Camera.main.WorldToScreenPoint(transform.position));
+            shieldInstance.SetTarget(transform);
+        }
+        
+        MedicineType resistantType1 = (MedicineType)(1 << 0 | 1 << 1 | 1 << 2 | 1 << 3 | 1 << 4 | 1 << 5);
+        MedicineType resistantType2 = (MedicineType)(1 << 6 | 1 << 7 | 1 << 8);
+        MedicineType resistantType3 = (MedicineType)(1 << 9);
+        
+        int resistantCount = 0;
+
+        if ((acquiredResistant & resistantType1) != MedicineType.None)
+        {
+            acquiredResistant = resistantType1;
+            resistantCount++;
+            shieldInstance.SetColor(Color.green);
+        }
+        if ((acquiredResistant & resistantType2) != MedicineType.None)
+        {
+            acquiredResistant = resistantType2;
+            resistantCount++;
+            var orange = new Color(255, 90, 0);
+            shieldInstance.SetColor(orange);
+        }
+        if ((acquiredResistant & resistantType3) != MedicineType.None)
+        {
+            acquiredResistant = resistantType3;
+            resistantCount++;
+            shieldInstance.SetColor(Color.red);
+        }
+
+        if (resistantCount >= 2)
+        {
+            shieldInstance.SetColor(Color.white);
+        }
+        
         generalMonsterData.resistantMedicineType = generalMonsterData.resistantMedicineType | acquiredResistant;
     }
 

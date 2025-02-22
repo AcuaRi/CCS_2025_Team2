@@ -16,7 +16,7 @@ public class AudioNode : MonoBehaviour
     {
         yield return new WaitWhile(() => audioSource.isPlaying);
 
-        SoundManager.instance.SetNode(this);
+        SoundManager.Instance.SetNode(this);
     }
 
     public void SetVolumn(float percent)

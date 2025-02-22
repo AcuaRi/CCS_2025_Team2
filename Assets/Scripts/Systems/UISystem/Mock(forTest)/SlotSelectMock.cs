@@ -8,6 +8,8 @@ public class SlotSelectMock : MonoBehaviour
 {
     public static SlotSelectMock Instance { get; private set; }
     
+    public MedicineType selectedMedicineType;
+    
     [Header("UI Settings")]
     [SerializeField] private GameObject[] lockUIPrefab;
     [SerializeField] private float unlockHoldTime = 2f;
@@ -51,6 +53,12 @@ public class SlotSelectMock : MonoBehaviour
             unlockProgressTexts[i].text = unlockCosts[i].ToString();
         }
         
+        UnlockSlot(0);
+        UnlockSlot(1);
+
+        UIManager.Instance.SelectSlot(0);
+        selectedMedicineType = MedicineType.Medicine1;
+        
         InvokeRepeating(nameof(AddPointsPerSecond), 1f, 1f);
     }
     
@@ -67,6 +75,7 @@ public class SlotSelectMock : MonoBehaviour
                     if (Keyboard.current[key].wasPressedThisFrame)
                     {
                         UIManager.Instance.SelectSlot(i);
+                        selectedMedicineType = (MedicineType)(1<<i);
                     }
                 }
                 else
@@ -86,6 +95,7 @@ public class SlotSelectMock : MonoBehaviour
                     {
                         UnlockSlot(i);
                         UIManager.Instance.SelectSlot(i);
+                        selectedMedicineType = (MedicineType)(1<<i);
                     }
                 }
             }

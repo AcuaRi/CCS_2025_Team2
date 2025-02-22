@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 public class Cell : MonoBehaviour, IDamageable
 {
     // 細胞の初期HP（希望する値に設定）
-    [SerializeField] private float hp = 100f;
+    [SerializeField] private float hp = 50f;
     private float currentHp;
     
     // 揺れの強さ（お好みの値に調整）
@@ -33,7 +33,16 @@ public class Cell : MonoBehaviour, IDamageable
 
     public void GetDamaged(float damage, MedicineType medicineType, Vector2 force)
     {
-        GetDamaged(damage);
+        MedicineType resistantType1 = (MedicineType)(1 << 0 | 1 << 1 | 1 << 2 | 1 << 3 | 1 << 4 | 1 << 5);
+        
+        if ((medicineType & resistantType1) != MedicineType.None)
+        {
+            return;
+        }
+        else
+        {
+            GetDamaged(damage);
+        }
     }
 
     /// <summary>
@@ -44,6 +53,7 @@ public class Cell : MonoBehaviour, IDamageable
     public void GetDamaged(float damage)
     {
         if(damage <= 0) return;
+        
         
         currentHp -= damage;
         //Debug.Log("ダメージを受けました。 現在HP: " + hp);

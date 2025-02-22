@@ -11,9 +11,6 @@ public class VesselTeleport : MonoBehaviour
             var parent = other.transform.parent;
             parent.position = new Vector3(teleportTo.position.x, other.transform.position.y, other.transform.position.z);
             parent.GetComponent<IDamageable>().GetDamaged(30f);
-            
-            //Remove This
-            GameManager.Instance.GetDamagedInBody(1f);
         }
     }
 }

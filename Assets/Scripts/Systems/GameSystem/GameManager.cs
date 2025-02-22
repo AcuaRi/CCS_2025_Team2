@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,16 +29,57 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        SoundManager.Instance.PlayBGM("BGM");
+        
         remainingTime = playTime;
         
         currentHp = maxHp;
         UIManager.Instance.SetBodyHpGaugeUI(currentHp, maxHp);
         
-        EnemyGenerator.Instance.GenerateEnemy("EnemyType1_Good", 2, 5, 5);
-        EnemyGenerator.Instance.GenerateEnemy("EnemyType2_Good", 2, 5, 5);
+        StartCoroutine(SpawnWaves());
     }
     
+    private IEnumerator SpawnWaves()
+    {
+        int waveNumber = 0;
     
+        while (remainingTime > 0)
+        {
+            waveNumber++;
+            
+            GenerateWaveEnemies();
+            
+            yield return new WaitForSeconds(30f);
+        }
+    }
+
+    private void GenerateWaveEnemies()
+    {
+        var random = Random.Range(1, 6);
+        switch (random)
+        {
+            case 1:
+                EnemyGenerator.Instance.GenerateEnemy("Enemy_Bacillus", 5, 5, 3);
+                EnemyGenerator.Instance.GenerateEnemy("Enemy_Rensa", 5, 5, 3);
+                break;
+            case 2:
+                EnemyGenerator.Instance.GenerateEnemy("Enemy_MSSA", 5, 5, 3);
+                EnemyGenerator.Instance.GenerateEnemy("Enemy_MRSA", 5, 5, 3);
+                break;
+            case 3:
+                EnemyGenerator.Instance.GenerateEnemy("Enemy_Pesto", 5, 5, 3);
+                EnemyGenerator.Instance.GenerateEnemy("Enemy_Influenza", 5, 5, 3);
+                break;
+            case 4:
+                EnemyGenerator.Instance.GenerateEnemy("Enemy_Roku", 5, 5, 3);
+                EnemyGenerator.Instance.GenerateEnemy("Enemy_E_Coli", 5, 5, 3);
+                break;
+            case 5:
+                EnemyGenerator.Instance.GenerateEnemy("Enemy_8", 5, 5, 3);
+                EnemyGenerator.Instance.GenerateEnemy("Enemy_9", 5, 5, 3);
+                break;
+        }
+    }
 
     void Update()
     {
@@ -60,6 +102,7 @@ public class GameManager : MonoBehaviour
         {
             remainingTime = 0f;
             // GameOver Logic
+            SceneLoader.LoadSceneFast("ResultScene 1");
         }
         
         if (UIManager.Instance != null)
@@ -74,5 +117,11 @@ public class GameManager : MonoBehaviour
         
         this.currentHp -= damage;
         UIManager.Instance.SetBodyHpGaugeUI(currentHp, maxHp);
+
+        if (currentHp <= 0)
+        {
+            SoundManager.Instance.StopBGM();
+            SceneLoader.LoadSceneFast("ResultScene");
+        }
     }
 }

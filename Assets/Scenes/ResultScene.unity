@@ -669,7 +669,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 640338854}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1279339024}
+        m_TargetAssemblyTypeName: OnButton, Assembly-CSharp
+        m_MethodName: OnClick_Title
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &640338854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -790,7 +802,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 858335339}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1279339024}
+        m_TargetAssemblyTypeName: OnButton, Assembly-CSharp
+        m_MethodName: OnClick_Exit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &858335339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1179,7 +1203,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1148848077}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1279339024}
+        m_TargetAssemblyTypeName: OnButton, Assembly-CSharp
+        m_MethodName: OnClick_InGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1148848077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1310,7 +1346,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1231228396
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1437,6 +1473,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1279339022}
   - component: {fileID: 1279339023}
+  - component: {fileID: 1279339024}
   m_Layer: 0
   m_Name: Buttons
   m_TagString: Untagged
@@ -1492,6 +1529,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1279339024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1279339021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5789d90ef02cd6e43b6990c21c36d33e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1515801767
 GameObject:
   m_ObjectHideFlags: 0

@@ -39,6 +39,8 @@ public class Bullet : MonoBehaviour
         addVector = new Vector3(direction.x, direction.y, 0);
         addVector.Normalize();
         //Debug.Log(addVector);
+        
+        SoundManager.Instance.PlaySound("Shoot", transform.position);
     }
 
     public void getVector(Vector3 from, Vector3 to)
@@ -54,7 +56,7 @@ public class Bullet : MonoBehaviour
             if (enemy != null)
             {
                 //enemy.GetDamaged(10f, MedicineType.Medicine1, Vector2.zero);
-                enemy.GetDamaged(10f, MedicineType.Medicine1, 20f * (other.transform.position - transform.position).normalized);
+                enemy.GetDamaged(10f, SlotSelectMock.Instance.selectedMedicineType, 20f * (other.transform.position - transform.position).normalized);
             }
         }
         
@@ -63,7 +65,7 @@ public class Bullet : MonoBehaviour
             var enemy = other.gameObject.GetComponent<IDamageable>();
             if (enemy != null)
             {
-                enemy.GetDamaged(10f, MedicineType.Medicine1, Vector2.zero);
+                enemy.GetDamaged(10f, SlotSelectMock.Instance.selectedMedicineType, Vector2.zero);
             }
         }
 
@@ -72,7 +74,7 @@ public class Bullet : MonoBehaviour
             var cell = other.gameObject.GetComponent<Cell>();
             if (cell != null)
             {
-                cell.GetDamaged(20f);
+                cell.GetDamaged(10f, SlotSelectMock.Instance.selectedMedicineType, Vector2.zero);
             }
         }
         
