@@ -47,16 +47,16 @@ public class GameManager : MonoBehaviour
         {
             waveNumber++;
             
-            GenerateWaveEnemies();
+            GenerateWaveEnemies(waveNumber);
             
             yield return new WaitForSeconds(30f);
         }
     }
 
-    private void GenerateWaveEnemies()
+    private void GenerateWaveEnemies(int waveNumber)
     {
-        var random = Random.Range(1, 6);
-        switch (random)
+        //var random = Random.Range(1, 6);
+        switch (waveNumber)
         {
             case 1:
                 EnemyGenerator.Instance.GenerateEnemy("Enemy_Bacillus", 5, 5, 3);
@@ -75,8 +75,8 @@ public class GameManager : MonoBehaviour
                 EnemyGenerator.Instance.GenerateEnemy("Enemy_E_Coli", 5, 5, 3);
                 break;
             case 5:
-                EnemyGenerator.Instance.GenerateEnemy("Enemy_8", 5, 5, 3);
-                EnemyGenerator.Instance.GenerateEnemy("Enemy_9", 5, 5, 3);
+                EnemyGenerator.Instance.GenerateEnemy("Enemy_Kurosuto", 5, 5, 3);
+                EnemyGenerator.Instance.GenerateEnemy("Enemy_MaicoPlazma", 5, 5, 3);
                 break;
         }
     }

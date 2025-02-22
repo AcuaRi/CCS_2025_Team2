@@ -16887,9 +16887,9 @@ MonoBehaviour:
     enemyPrefab: {fileID: 4258777340609324754, guid: 6b7368701ec2cbb45a2339b8ff2aff67, type: 3}
   - key: Enemy_E_Coli
     enemyPrefab: {fileID: 4845832416364171865, guid: 103acb670a5f83e49aaf154751bb3b07, type: 3}
-  - key: Enemy_8
+  - key: Enemy_Kurosuto
     enemyPrefab: {fileID: 5153336977344748937, guid: 3d417bdd8a5c0f048a4910cb2024e067, type: 3}
-  - key: Enemy_9
+  - key: Enemy_MaicoPlazma
     enemyPrefab: {fileID: 5153336977344748937, guid: 8b6af3f3277263e42aed737133617c3b, type: 3}
 --- !u!4 &1702904327
 Transform:

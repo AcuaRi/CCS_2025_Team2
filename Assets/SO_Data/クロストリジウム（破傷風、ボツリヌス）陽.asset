@@ -44,7 +44,7 @@ MonoBehaviour:
   attackSpeed: 5
   attackDamage: 10
   divisionCoolTime: 10
-  divisionProbability: 0.2
+  divisionProbability: 0
   goodMedicineTypes: 0
   badMedicineTypes: 939
   resistantMedicineType: 0
