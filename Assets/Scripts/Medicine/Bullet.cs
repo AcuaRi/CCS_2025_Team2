@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        Vector3 newPosition;
+        //Vector3 newPosition;
         //newPosition = thisTransform.position + addVector * speed;
         //transform.position = new Vector3(newPosition.x, newPosition.y, newPosition.z);
         transform.position += Time.deltaTime * speed * addVector;
