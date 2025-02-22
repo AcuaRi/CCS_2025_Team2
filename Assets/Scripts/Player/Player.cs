@@ -46,9 +46,11 @@ public class Player : MonoBehaviour, IDamageable
     // �ˌ����[�h�̗񋓌^�A������������Ȃ���������
     public enum ShootingMode
     {
-        Single,       // 1���� (type0)
-        Triple,       // 3���� (type1)
-        Omni         // 8���� (type2)
+        Single,       // 1����
+        Triple,       // 3����
+        Omni,         // 8����
+        Cluster,
+        Landmine
     }
 
     void Awake()
@@ -87,13 +89,19 @@ public class Player : MonoBehaviour, IDamageable
             switch (_currentMode)
             {
                 case ShootingMode.Single:
-                    _shootingCoroutine = StartCoroutine(shootingType0());
+                    _shootingCoroutine = StartCoroutine(shootingTypeSingle());
                     break;
                 case ShootingMode.Triple:
-                    _shootingCoroutine = StartCoroutine(shootingType1());
+                    _shootingCoroutine = StartCoroutine(shootingTypeTriple());
                     break;
                 case ShootingMode.Omni:
-                    _shootingCoroutine = StartCoroutine(shootingType2());
+                    _shootingCoroutine = StartCoroutine(shootingTypeOmni());
+                    break;
+                case ShootingMode.Cluster:
+                    _shootingCoroutine = StartCoroutine(shootingTypeCluster());
+                    break;
+                case ShootingMode.Landmine:
+                    _shootingCoroutine = StartCoroutine(shootingTypeLandmine());
                     break;
             }
         }
@@ -183,7 +191,7 @@ public class Player : MonoBehaviour, IDamageable
         _currentMode = shootingModes[_medicineNum - 1];
     }
 
-    IEnumerator shootingType0()
+    IEnumerator shootingTypeSingle()
     {
         while (_isShooting)
         {
@@ -194,7 +202,7 @@ public class Player : MonoBehaviour, IDamageable
         _shootingCoroutine = null;
     }
 
-    IEnumerator shootingType1()
+    IEnumerator shootingTypeTriple()
     {
         while (_isShooting)
         {
@@ -223,7 +231,7 @@ public class Player : MonoBehaviour, IDamageable
         _shootingCoroutine = null;
     }
 
-    IEnumerator shootingType2()
+    IEnumerator shootingTypeOmni()
     {
         while (_isShooting)
         {
@@ -240,6 +248,28 @@ public class Player : MonoBehaviour, IDamageable
                 b.GetComponent<Bullet>().getVector(transform.position, transform.position + bulletDirection);
             }
 
+            yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);
+        }
+        _shootingCoroutine = null;
+    }
+
+    IEnumerator shootingTypeCluster()
+    {
+        while (_isShooting)
+        {
+            GameObject b = Instantiate(bullet, transform.position + bulletPoint, Quaternion.identity);
+            b.GetComponent<Bullet>().getVector(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);
+        }
+        _shootingCoroutine = null;
+    }
+
+    IEnumerator shootingTypeLandmine() // explodes after ○○s
+    {
+        while (_isShooting)
+        {
+            GameObject b = Instantiate(bullet, transform.position + bulletPoint, Quaternion.identity);
+            b.GetComponent<Bullet>().getVector(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
             yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);
         }
         _shootingCoroutine = null;
