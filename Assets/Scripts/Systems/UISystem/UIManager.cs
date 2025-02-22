@@ -34,6 +34,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Color highlightedSlotColor;
     [Tooltip("Color of the slot unhighlighted")]
     [SerializeField] private Color unhighlightedSlotColor;
+    [Tooltip("GameObject of the pausePanel")]
+    [SerializeField] private GameObject pausePanel;
     
     private int selectedSlotIndex = 0;
     
@@ -144,5 +146,9 @@ public class UIManager : MonoBehaviour
         selectedSlotIndex = slotIndex;
         slotImages[slotIndex].color = highlightedSlotColor;
     }
-    
+
+    public void SetPausePanel(bool isPaused)
+    {
+        pausePanel.SetActive(isPaused);
+    }
 }

@@ -92,6 +92,7 @@ public class GameManager : MonoBehaviour
     void TogglePause()
     {
         isPaused = !isPaused;
+        UIManager.Instance.SetPausePanel(isPaused);
         Time.timeScale = isPaused ? 0f : 1f;
     }
 
