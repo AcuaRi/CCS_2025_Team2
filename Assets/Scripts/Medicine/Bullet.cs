@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class Bullet : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class Bullet : MonoBehaviour
     float deleteDistance = 30 * 30;
     //public float lifeTime = 5f;
 
+    protected MedicineType _medicineType = MedicineType.None;
+
     private GameObject playerObj = null;
 
     private float distance_P;
@@ -18,6 +21,11 @@ public class Bullet : MonoBehaviour
     private Vector3 direction;
     private Transform thisTransform;
 
+    protected virtual void Init()
+    {
+        
+    }
+    
     private void Update()
     {
         //Vector3 newPosition;
@@ -33,6 +41,8 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
+        Init();
+        
         playerObj = GameObject.Find("Player"); // ��肭�����Ȃ�������G���[�f���Ăق���
         thisTransform = transform;
         //addVector = 100 * new Vector3(direction.x * Time.deltaTime, direction.y * Time.deltaTime, 0);
@@ -56,7 +66,8 @@ public class Bullet : MonoBehaviour
             if (enemy != null)
             {
                 //enemy.GetDamaged(10f, MedicineType.Medicine1, Vector2.zero);
-                enemy.GetDamaged(10f, SlotSelectMock.Instance.selectedMedicineType, 20f * (other.transform.position - transform.position).normalized);
+                //enemy.GetDamaged(10f, SlotSelectMock.Instance.selectedMedicineType, 20f * (other.transform.position - transform.position).normalized);
+                enemy.GetDamaged(10f, _medicineType, 0 * (other.transform.position - transform.position).normalized);
             }
         }
         
@@ -66,6 +77,7 @@ public class Bullet : MonoBehaviour
             if (enemy != null)
             {
                 enemy.GetDamaged(10f, SlotSelectMock.Instance.selectedMedicineType, Vector2.zero);
+                //enemy.GetDamaged(10f, playerObj.GetComponent<Player>()._medicineType, Vector2.zero);
             }
         }
 
