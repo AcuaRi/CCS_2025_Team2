@@ -13,7 +13,7 @@ public class GeneralEnemyData : ScriptableObject
     public Vector2 moveDirection = Vector2.down + Vector2.right;
     
     [Header("Recognize Setting")]
-    public float obstacleRaycastDistance;
+    public float targetLossRadius;
     public float recognizeRadius;
     public LayerMask targetLayer;
     public Transform targetTransform;
@@ -42,7 +42,7 @@ public class GeneralEnemyData : ScriptableObject
         data.moveSpeed = moveSpeed;
         data.moveDirection = moveDirection;
         
-        data.obstacleRaycastDistance = obstacleRaycastDistance;
+        data.targetLossRadius = targetLossRadius;
         data.recognizeRadius = recognizeRadius;
         data.targetLayer = targetLayer;
         data.targetTransform = null;

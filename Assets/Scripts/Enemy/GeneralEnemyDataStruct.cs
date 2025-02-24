@@ -8,7 +8,7 @@ public struct GeneralEnemyDataStruct
     public float moveSpeed;
     public Vector2 moveDirection;
     
-    public float obstacleRaycastDistance;
+    public float targetLossRadius;
     public float recognizeRadius;
     public LayerMask targetLayer;
     public Transform targetTransform;

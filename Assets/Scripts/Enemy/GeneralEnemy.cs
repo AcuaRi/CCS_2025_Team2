@@ -106,6 +106,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         isTransition = TransitionCheck();
         
         if(isTransition && currentState != nextState) currentState.OnExit?.Invoke();
+        
     }
 
     /// 
@@ -182,8 +183,9 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         }
 
         if (Vector2.Distance(generalMonsterData.targetTransform.position, transform.position) >
-            1.5f * generalMonsterData.recognizeRadius)
+            generalMonsterData.targetLossRadius)
         {
+            //Debug.Log("test");
             generalMonsterData.targetTransform = null;
             nextState = idleState;
             return;
@@ -266,7 +268,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
             nextState = attackState;
             FindTarget = true;
         }
-        else
+        else if (generalMonsterData.targetTransform == null)
         {
             rb.velocity = Vector2.zero;
             generalMonsterData.moveDirection = ( Vector2.right * Random.Range(-1f, 1f) + Vector2.down * Random.Range(0.5f, 1f)).normalized;
@@ -306,7 +308,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
             var target = other.gameObject.GetComponent<IDamageable>();
             if (target != null)
             {
-                target.GetDamaged(generalMonsterData.attackDamage);
+                target.GetDamaged(generalMonsterData.attackDamage, MedicineType.None,  (other.transform.position - this.transform.position).normalized);
             }
         }
     }
@@ -372,7 +374,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         if ((medicineType & generalMonsterData.resistantMedicineType) == medicineType)
         {
             caculatedDamage = damage / 10;
-            SoundManager.Instance.PlaySound("GetDamaged_Bad", transform.position);
+            SoundManager.Instance.PlaySound("GetDamaged_shield", transform.position);
         }
         
         //Case of good medicine
@@ -408,6 +410,10 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         {
             rb.AddForce(force, (ForceMode2D)ForceMode.Impulse);
         }
+        
+        generalMonsterData.targetTransform = GameObject.Find("Player").transform;
+        nextState = attackState;
+        FindTarget = true;
         
         if ( generalMonsterData.hp <= 0)
         {
@@ -510,8 +516,6 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
     
     void GetSnappedRotation(Vector2 movementDirection)
     {
-        //bodyTransform.up = -movementDirection;
-        // 목표 회전값을 계산: -movementDirection 방향이 bodyTransform의 up 방향이 되도록 함
         Quaternion desiredRotation = Quaternion.LookRotation(Vector3.forward, -movementDirection);
     
         // 초당 90도 회전 (필요에 따라 rotationSpeed 값을 조절하세요)

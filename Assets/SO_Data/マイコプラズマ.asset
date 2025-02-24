@@ -16,7 +16,7 @@ MonoBehaviour:
     hp: 10
     moveSpeed: 5
     moveDirection: {x: 1, y: -1}
-    obstacleRaycastDistance: 0.5
+    targetLossRadius: 0
     recognizeRadius: 5
     targetLayer:
       serializedVersion: 2
@@ -34,8 +34,8 @@ MonoBehaviour:
   hp: 10
   moveSpeed: 5
   moveDirection: {x: 1, y: -1}
-  obstacleRaycastDistance: 0.5
-  recognizeRadius: 5
+  targetLossRadius: 10
+  recognizeRadius: 1
   targetLayer:
     serializedVersion: 2
     m_Bits: 2048
