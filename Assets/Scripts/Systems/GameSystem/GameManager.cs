@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float maxHp;
     private float currentHp;
     private float remainingTime;
+    public float RemainingTime => remainingTime;
     private bool isPaused = false;
     public bool IsPaused => isPaused;
     
@@ -37,6 +38,10 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.SetBodyHpGaugeUI(currentHp, maxHp);
         
         StartCoroutine(SpawnWaves());
+        
+        
+        //EnemyGenerator.Instance.GenerateEnemy("Enemy_Bacillus", 1, 1, 1);
+        
     }
     
     private IEnumerator SpawnWaves()
@@ -92,6 +97,14 @@ public class GameManager : MonoBehaviour
     void TogglePause()
     {
         isPaused = !isPaused;
+        if (isPaused)
+        {
+            SoundManager.Instance.PlaySound("Open_pause", transform.position);
+        }
+        else
+        {
+            SoundManager.Instance.PlaySound("Close_pause", transform.position);
+        }
         UIManager.Instance.SetPausePanel(isPaused);
         Time.timeScale = isPaused ? 0f : 1f;
     }
@@ -122,6 +135,7 @@ public class GameManager : MonoBehaviour
         if (currentHp <= 0)
         {
             SoundManager.Instance.StopBGM();
+            SoundManager.Instance.PlayBGM("BGM_Lose");
             SceneLoader.LoadSceneFast("ResultScene");
         }
     }

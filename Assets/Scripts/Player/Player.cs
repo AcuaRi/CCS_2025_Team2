@@ -21,7 +21,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private float reviveTime = 10f;
     private bool isAlive = true;
 
-    [SerializeField] private float invincibleTime = 0.5f;
+    [SerializeField] private float invincibleTime = 0.25f;
     private bool isInvincible = false;
     private SpriteRenderer _sr;
     private Color _originalColor;
@@ -79,7 +79,7 @@ public class Player : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        if (!isAlive) return;
+        //if (!isAlive) return;
         _Move();
         _medicineChoice();
         // Debug.Log(_isCoroutine);
@@ -162,7 +162,8 @@ public class Player : MonoBehaviour, IDamageable
         {
             return;
         }
-        _rb.velocity = new Vector2(_input.x * _playerSpeed, _input.y * _playerSpeed);
+        //_rb.velocity = new Vector2(_input.x * _playerSpeed, _input.y * _playerSpeed);
+        _rb.transform.Translate( _playerSpeed * Time.deltaTime *  _input);
     }
 
     private void _medicineChoice() // Player�N���X���ł��Ȃ��Ă����������A�e��type�������Ă��Ȃ��ƃ_���[�W���荢��̂Œe�ɂ��^�C�v����
@@ -187,6 +188,7 @@ public class Player : MonoBehaviour, IDamageable
             _medicineType = MedicineType.Medicine4;
             _medicineNum = 4;
         }
+        
         bullet = bulletPrefabs[_medicineNum - 1];
         _currentMode = shootingModes[_medicineNum - 1];
     }
@@ -282,6 +284,8 @@ public class Player : MonoBehaviour, IDamageable
 
     public void GetDamaged(float damage, MedicineType medicineType, Vector2 force)
     {
+        if(!isAlive || isInvincible) return;
+        _rb.AddForce(force, ForceMode2D.Impulse);
         GetDamaged(damage);
     }
 
@@ -297,11 +301,14 @@ public class Player : MonoBehaviour, IDamageable
         }
         
         UpdateHpGauge();
+        SoundManager.Instance.PlaySound("Damage_to_player", transform.position);
         
         if (_currentHP <= 0)
         {
             _currentHP = 0;
             isAlive = false;
+            _rb.velocity = Vector2.zero;
+            SoundManager.Instance.PlaySound("Death_of_machine", transform.position);
             StopForRevive();
         }
         else
@@ -321,12 +328,14 @@ public class Player : MonoBehaviour, IDamageable
     {
         isInvincible = false;
         _sr.color = _originalColor;
+        _rb.velocity = Vector2.zero;
     }
     
     private void StopForRevive()
     {
         _sr.color = Color.black;
         Invoke("Revive", reviveTime);
+        
     }
 
     private void Revive()
