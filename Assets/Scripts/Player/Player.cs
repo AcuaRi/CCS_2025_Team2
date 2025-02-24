@@ -49,7 +49,6 @@ public class Player : MonoBehaviour, IDamageable
         Single,       // 1����
         Triple,       // 3����
         Omni,         // 8����
-        Cluster,
         Landmine
     }
 
@@ -96,9 +95,6 @@ public class Player : MonoBehaviour, IDamageable
                     break;
                 case ShootingMode.Omni:
                     _shootingCoroutine = StartCoroutine(shootingTypeOmni());
-                    break;
-                case ShootingMode.Cluster:
-                    _shootingCoroutine = StartCoroutine(shootingTypeCluster());
                     break;
                 case ShootingMode.Landmine:
                     _shootingCoroutine = StartCoroutine(shootingTypeLandmine());
@@ -248,17 +244,6 @@ public class Player : MonoBehaviour, IDamageable
                 b.GetComponent<Bullet>().getVector(transform.position, transform.position + bulletDirection);
             }
 
-            yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);
-        }
-        _shootingCoroutine = null;
-    }
-
-    IEnumerator shootingTypeCluster()
-    {
-        while (_isShooting)
-        {
-            GameObject b = Instantiate(bullet, transform.position + bulletPoint, Quaternion.identity);
-            b.GetComponent<Bullet>().getVector(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
             yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);
         }
         _shootingCoroutine = null;

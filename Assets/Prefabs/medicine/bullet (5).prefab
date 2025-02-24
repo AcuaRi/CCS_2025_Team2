@@ -110,7 +110,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  deleteDistance: 50
+  deleteDistance: 30
+  bullet: {fileID: 1913493599678101969, guid: ecc6bd21449a60e4a8abe5b8742fed30, type: 3}
+  clusterType: 0
 --- !u!1 &2392244139556128610
 GameObject:
   m_ObjectHideFlags: 0

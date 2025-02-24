@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 254541781946723456}
   - component: {fileID: 525783366556029286}
   - component: {fileID: 7578414046922151717}
-  - component: {fileID: 246296115244841391}
+  - component: {fileID: 7246674024423932385}
   m_Layer: 0
   m_Name: bullet (4) 1
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3032336744985236769}
@@ -97,7 +97,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.15
---- !u!114 &246296115244841391
+--- !u!114 &7246674024423932385
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,11 +106,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1913493599678101969}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b77890a1accaf2446b8d825ba6b7aa8f, type: 3}
+  m_Script: {fileID: 11500000, guid: 1cceeeb19a2054e469ea1eff526fe0da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  deleteDistance: 50
+  deleteDistance: 20
 --- !u!1 &2392244139556128610
 GameObject:
   m_ObjectHideFlags: 0
