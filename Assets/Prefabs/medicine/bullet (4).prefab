@@ -77,7 +77,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 1073741824
+    m_Bits: 1075841024
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -110,7 +110,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  deleteDistance: 50
+  deleteDistance: 25
+  bullet: {fileID: 1913493599678101969, guid: ecc6bd21449a60e4a8abe5b8742fed30, type: 3}
+  clusterType: 1
 --- !u!1 &2392244139556128610
 GameObject:
   m_ObjectHideFlags: 0

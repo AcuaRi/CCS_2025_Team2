@@ -2,24 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class Bullet : MonoBehaviour
 {
     [SerializeField]
-    private float speed = 0.1f;
+    protected float speed = 0.1f;
     [SerializeField]
-    float deleteDistance = 30 * 30;
+    protected float deleteDistance = 30 * 30;
     //public float lifeTime = 5f;
 
+    protected GameObject playerObj = null;
+    
     protected MedicineType _medicineType = MedicineType.None;
-
-    private GameObject playerObj = null;
-
-    private float distance_P;
-    private Vector3 addVector;
-    private Vector3 direction;
-    private Transform thisTransform;
+    
+    protected float distance_P;
+    protected Vector3 startingPoint;
+    protected Vector3 addVector;
+    protected Vector3 direction;
+    protected Transform thisTransform;
 
     protected virtual void Init()
     {
@@ -32,18 +32,15 @@ public class Bullet : MonoBehaviour
         //newPosition = thisTransform.position + addVector * speed;
         //transform.position = new Vector3(newPosition.x, newPosition.y, newPosition.z);
         transform.position += Time.deltaTime * speed * addVector;
-        distance_P = (playerObj.transform.position - transform.position).sqrMagnitude;
-        if (distance_P > deleteDistance)
-        {
-            Destroy(gameObject);
-        }
+        _checkDistance();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         Init();
         
         playerObj = GameObject.Find("Player"); // ��肭�����Ȃ�������G���[�f���Ăق���
+        setStartPoint(playerObj.transform.position);
         thisTransform = transform;
         //addVector = 100 * new Vector3(direction.x * Time.deltaTime, direction.y * Time.deltaTime, 0);
         addVector = new Vector3(direction.x, direction.y, 0);
@@ -53,9 +50,23 @@ public class Bullet : MonoBehaviour
         SoundManager.Instance.PlaySound("Shoot", transform.position);
     }
 
+    protected virtual void _checkDistance()
+    {
+        distance_P = (startingPoint - transform.position).sqrMagnitude;
+        if (distance_P > deleteDistance)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public void getVector(Vector3 from, Vector3 to)
     {
         direction = new Vector3(to.x - from.x, to.y - from.y, to.z - from.z);
+    }
+
+    public void setStartPoint(Vector3 startPoint)
+    {
+        this.startingPoint = startPoint;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -66,8 +77,8 @@ public class Bullet : MonoBehaviour
             if (enemy != null)
             {
                 //enemy.GetDamaged(10f, MedicineType.Medicine1, Vector2.zero);
-                //enemy.GetDamaged(10f, SlotSelectMock.Instance.selectedMedicineType, 20f * (other.transform.position - transform.position).normalized);
-                enemy.GetDamaged(10f, _medicineType, 0 * (other.transform.position - transform.position).normalized);
+                enemy.GetDamaged(10f, SlotSelectMock.Instance.selectedMedicineType, 20f * (other.transform.position - transform.position).normalized);
+                //enemy.GetDamaged(10f, _medicineType, 0 * (other.transform.position - transform.position).normalized);
             }
         }
         
@@ -77,7 +88,6 @@ public class Bullet : MonoBehaviour
             if (enemy != null)
             {
                 enemy.GetDamaged(10f, SlotSelectMock.Instance.selectedMedicineType, Vector2.zero);
-                //enemy.GetDamaged(10f, playerObj.GetComponent<Player>()._medicineType, Vector2.zero);
             }
         }
 
