@@ -16,6 +16,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e6a7a5e581e89544a26838bc27ea7da, type: 2}
   - {fileID: 11400000, guid: a8860b708da0eb34fb7a86cc2b5e5fef, type: 2}
   - {fileID: 11400000, guid: 0b7626c6292c8484da14dfa81e506e83, type: 2}
-  waveInfos: []
+  - {fileID: 11400000, guid: 411a3ca8e2229b14caa22376fc37d7d3, type: 2}
+  - {fileID: 11400000, guid: e769d32e35016df49bc045f6a4d25806, type: 2}
+  waveInfos:
+  - {fileID: 11400000, guid: 36ee5759e4e9598409642df53a8c8a69, type: 2}
   waveStartTime: 90
-  waveDuration: 100
+  waveDuration: 10

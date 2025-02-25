@@ -48,7 +48,6 @@ public class WaveManager : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         
         // add alert logic at here
-        Debug.Log($"Alert_before_wave{currentWaveIndex}");
         UIManager.Instance.ShowWarning($"== Wave {currentWaveIndex + 1}/{waveDataList.Count} ==", alertTime);
         SoundManager.Instance.PlaySound($"Alert_before_wave{currentWaveIndex+1}", this.transform.position);
         

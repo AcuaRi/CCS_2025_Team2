@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3aec2dcc0fedbd844b93a2db121b132c, type: 3}
-  m_Name: StageInfo 2
+  m_Name: Wave4Info_MaicoPlazma
   m_EditorClassIdentifier: 
-  EnemyType: 2
-  NumOnce: 1
+  EnemyType: 7
+  NumOnce: 16
   Interval: 1
   IsRandom: 1

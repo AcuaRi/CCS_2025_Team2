@@ -16,6 +16,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e6a7a5e581e89544a26838bc27ea7da, type: 2}
   - {fileID: 11400000, guid: a8860b708da0eb34fb7a86cc2b5e5fef, type: 2}
   - {fileID: 11400000, guid: 0b7626c6292c8484da14dfa81e506e83, type: 2}
-  waveInfos: []
+  - {fileID: 11400000, guid: 411a3ca8e2229b14caa22376fc37d7d3, type: 2}
+  - {fileID: 11400000, guid: e769d32e35016df49bc045f6a4d25806, type: 2}
+  - {fileID: 11400000, guid: 221d098ef21243e41852601a24e2c188, type: 2}
+  - {fileID: 11400000, guid: 6db745c620f2c344bb6e7cad6b351db4, type: 2}
+  waveInfos:
+  - {fileID: 11400000, guid: 2fdad1daf7a308e459c3250509a5a9b0, type: 2}
+  - {fileID: 11400000, guid: 284fc6bfb7f6bc648be096aea63ee983, type: 2}
+  - {fileID: 11400000, guid: 9ef84fa8ec35d554f8d1c13fd0fb8015, type: 2}
+  - {fileID: 11400000, guid: d0cbdee6a056c164ea354d376301a14b, type: 2}
+  - {fileID: 11400000, guid: 8462006bd460c3f4d99a3d6c36fd0b17, type: 2}
+  - {fileID: 11400000, guid: 4636649dc3b500849b7bd99889c49fbd, type: 2}
+  - {fileID: 11400000, guid: a9dc50853c9bb62419dc3873b67ec9c0, type: 2}
   waveStartTime: 150
-  waveDuration: 160
+  waveDuration: 10

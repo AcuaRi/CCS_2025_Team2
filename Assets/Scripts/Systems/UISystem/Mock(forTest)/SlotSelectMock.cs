@@ -56,7 +56,7 @@ public class SlotSelectMock : MonoBehaviour
         }
         
         UnlockSlot(0);
-        UnlockSlot(1);
+        UnlockSlot(2);
 
         UIManager.Instance.SelectSlot(0);
         selectedMedicineType = MedicineType.Medicine1;

@@ -16,6 +16,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e6a7a5e581e89544a26838bc27ea7da, type: 2}
   - {fileID: 11400000, guid: a8860b708da0eb34fb7a86cc2b5e5fef, type: 2}
   - {fileID: 11400000, guid: 0b7626c6292c8484da14dfa81e506e83, type: 2}
-  waveInfos: []
+  - {fileID: 11400000, guid: e769d32e35016df49bc045f6a4d25806, type: 2}
+  - {fileID: 11400000, guid: 411a3ca8e2229b14caa22376fc37d7d3, type: 2}
+  - {fileID: 11400000, guid: 6db745c620f2c344bb6e7cad6b351db4, type: 2}
+  - {fileID: 11400000, guid: 221d098ef21243e41852601a24e2c188, type: 2}
+  - {fileID: 11400000, guid: 1fe500447b6641743affd92ef4ad5a83, type: 2}
+  - {fileID: 11400000, guid: 0aba708dc7854a948953824c8706d7a0, type: 2}
+  - {fileID: 11400000, guid: 06523b05fbd3d8a49a335c47fd36107c, type: 2}
+  waveInfos:
+  - {fileID: 11400000, guid: b9b4849badfb95a45b105aa6218047d4, type: 2}
+  - {fileID: 11400000, guid: 4a793a57e5e5bc64e85b8b15811585e5, type: 2}
   waveStartTime: 270
-  waveDuration: 280
+  waveDuration: 10
