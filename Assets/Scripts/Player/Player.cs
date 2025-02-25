@@ -73,6 +73,13 @@ public class Player : MonoBehaviour, IDamageable
             hpGaugeInstance.SetTarget(transform);
         }
         UpdateHpGauge();
+
+        HandleMedicineTypeChanged(MedicineType.Medicine1);
+        if (SlotSelectMock.Instance != null)
+        {
+            // 🚀 イベントリスナーを登録
+            SlotSelectMock.Instance.OnMedicineTypeChanged += HandleMedicineTypeChanged;
+        }
     }
 
     // Update is called once per frame
@@ -80,7 +87,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         //if (!isAlive) return;
         _Move();
-        _medicineChoice();
+        // _medicineChoice();
         // Debug.Log(_isCoroutine);
 
         if (_isShooting && _shootingCoroutine == null)
@@ -162,7 +169,7 @@ public class Player : MonoBehaviour, IDamageable
         _rb.transform.Translate( _playerSpeed * Time.deltaTime *  _input);
     }
 
-    private void _medicineChoice() // Player�N���X���ł��Ȃ��Ă����������A�e��type�������Ă��Ȃ��ƃ_���[�W���荢��̂Œe�ɂ��^�C�v����
+/*    private void _medicineChoice() // Player�N���X���ł��Ȃ��Ă����������A�e��type�������Ă��Ȃ��ƃ_���[�W���荢��̂Œe�ɂ��^�C�v����
     {
         if (Input.GetKey(KeyCode.Alpha1))
         {
@@ -187,6 +194,73 @@ public class Player : MonoBehaviour, IDamageable
         
         bullet = bulletPrefabs[_medicineNum - 1];
         _currentMode = shootingModes[_medicineNum - 1];
+    }*/
+
+    private void HandleMedicineTypeChanged(MedicineType newType)
+    {
+        if (newType == MedicineType.Medicine1)
+        {
+            _medicineType = MedicineType.Medicine1;
+            _medicineNum = 1;
+        }
+        else if (newType == MedicineType.Medicine2)
+        {
+            _medicineType = MedicineType.Medicine2;
+            _medicineNum = 2;
+        }
+        else if (newType == MedicineType.Medicine3)
+        {
+            _medicineType = MedicineType.Medicine3;
+            _medicineNum = 3;
+        }
+        else if (newType == MedicineType.Medicine4)
+        {
+            _medicineType = MedicineType.Medicine4;
+            _medicineNum = 4;
+        }
+        else if (newType == MedicineType.Medicine5)
+        {
+            _medicineType = MedicineType.Medicine5;
+            _medicineNum = 5;
+        }
+        else if (newType == MedicineType.Medicine6)
+        {
+            _medicineType = MedicineType.Medicine6;
+            _medicineNum = 6;
+        }
+        else if (newType == MedicineType.Medicine7)
+        {
+            _medicineType = MedicineType.Medicine7;
+            _medicineNum = 7;
+        }
+        else if (newType == MedicineType.Medicine8)
+        {
+            _medicineType = MedicineType.Medicine8;
+            _medicineNum = 8;
+        }
+        else if (newType == MedicineType.Medicine9)
+        {
+            _medicineType = MedicineType.Medicine9;
+            _medicineNum = 9;
+        }
+        else if (newType == MedicineType.Medicine0)
+        {
+            _medicineType = MedicineType.Medicine0;
+            _medicineNum =10;
+        }
+
+        bullet = bulletPrefabs[_medicineNum - 1];
+        _currentMode = shootingModes[_medicineNum - 1];
+        Debug.Log("MedicineType が変更されました: " + newType);
+    }
+
+    private void OnDestroy()
+    {
+        if (SlotSelectMock.Instance != null)
+        {
+            // イベントリスナーを解除（メモリリーク防止）
+            SlotSelectMock.Instance.OnMedicineTypeChanged -= HandleMedicineTypeChanged;
+        }
     }
 
     IEnumerator shootingTypeSingle()
@@ -195,6 +269,7 @@ public class Player : MonoBehaviour, IDamageable
         {
             GameObject b = Instantiate(bullet, transform.position + bulletPoint, Quaternion.identity);
             b.GetComponent<Bullet>().getVector(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            b.GetComponent<Bullet>().setMedicineType(_medicineType);
             yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);
         }
         _shootingCoroutine = null;
@@ -222,6 +297,7 @@ public class Player : MonoBehaviour, IDamageable
 
                 GameObject b = Instantiate(bullet, transform.position + bulletPoint, Quaternion.identity);
                 b.GetComponent<Bullet>().getVector(transform.position, transform.position + bulletDirection);
+                b.GetComponent<Bullet>().setMedicineType(_medicineType);
             }
 
             yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);
@@ -244,6 +320,7 @@ public class Player : MonoBehaviour, IDamageable
                 // �e�𐶐����A������ݒ�
                 GameObject b = Instantiate(bullet, transform.position + bulletPoint, Quaternion.identity);
                 b.GetComponent<Bullet>().getVector(transform.position, transform.position + bulletDirection);
+                b.GetComponent<Bullet>().setMedicineType(_medicineType);
             }
 
             yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);

@@ -53,6 +53,7 @@ public class Medicine_Cluster : Bullet
                 GameObject b = Instantiate(bullet, transform.position, Quaternion.identity);
                 b.GetComponent<Bullet>().getVector(transform.position, transform.position + bulletDirection);
                 b.GetComponent<Bullet>().setStartPoint(transform.position);
+                b.GetComponent<Bullet>().setMedicineType(_medicineType);
         }
     }
 
@@ -69,6 +70,7 @@ public class Medicine_Cluster : Bullet
                 GameObject b = Instantiate(bullet, transform.position, Quaternion.identity);
                 b.GetComponent<Bullet>().getVector(transform.position, transform.position + bulletDirection);
                 b.GetComponent<Bullet>().setStartPoint(transform.position);
+                b.GetComponent<Bullet>().setMedicineType(_medicineType);
         }
     }
 }
