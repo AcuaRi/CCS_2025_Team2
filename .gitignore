@@ -29,6 +29,9 @@
 # Rider cache directory
 .idea/
 
+# Zip file
+*.zip
+
 # Gradle cache directory
 .gradle/
 
