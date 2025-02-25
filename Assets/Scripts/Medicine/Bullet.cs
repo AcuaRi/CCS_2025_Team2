@@ -20,11 +20,6 @@ public class Bullet : MonoBehaviour
     protected Vector3 addVector;
     protected Vector3 direction;
     protected Transform thisTransform;
-
-    protected virtual void Init()
-    {
-        
-    }
     
     private void Update()
     {
@@ -37,8 +32,6 @@ public class Bullet : MonoBehaviour
 
     protected virtual void Start()
     {
-        Init();
-        
         playerObj = GameObject.Find("Player"); // ��肭�����Ȃ�������G���[�f���Ăق���
         setStartPoint(playerObj.transform.position);
         thisTransform = transform;
@@ -69,6 +62,11 @@ public class Bullet : MonoBehaviour
         this.startingPoint = startPoint;
     }
 
+    public void setMedicineType(MedicineType medicinetype) // 生成時にplayer側から呼び出す
+    {
+        this._medicineType = medicinetype;
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.layer == 21) //Enemy
@@ -77,7 +75,9 @@ public class Bullet : MonoBehaviour
             if (enemy != null)
             {
                 //enemy.GetDamaged(10f, MedicineType.Medicine1, Vector2.zero);
-                enemy.GetDamaged(10f, SlotSelectMock.Instance.selectedMedicineType, 20f * (other.transform.position - transform.position).normalized);
+                //enemy.GetDamaged(10f, SlotSelectMock.Instance.selectedMedicineType, 20f * (other.transform.position - transform.position).normalized);
+                enemy.GetDamaged(10f, _medicineType, 20f * (other.transform.position - transform.position).normalized);
+
                 //enemy.GetDamaged(10f, _medicineType, 0 * (other.transform.position - transform.position).normalized);
             }
         }
@@ -87,7 +87,8 @@ public class Bullet : MonoBehaviour
             var enemy = other.gameObject.GetComponent<IDamageable>();
             if (enemy != null)
             {
-                enemy.GetDamaged(10f, SlotSelectMock.Instance.selectedMedicineType, Vector2.zero);
+                //enemy.GetDamaged(10f, SlotSelectMock.Instance.selectedMedicineType, Vector2.zero);
+                enemy.GetDamaged(10f, _medicineType, Vector2.zero);
             }
         }
 
@@ -96,7 +97,8 @@ public class Bullet : MonoBehaviour
             var cell = other.gameObject.GetComponent<Cell>();
             if (cell != null)
             {
-                cell.GetDamaged(10f, SlotSelectMock.Instance.selectedMedicineType, Vector2.zero);
+                //cell.GetDamaged(10f, SlotSelectMock.Instance.selectedMedicineType, Vector2.zero);
+                cell.GetDamaged(10f, _medicineType, Vector2.zero);
             }
         }
         

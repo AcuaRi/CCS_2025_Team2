@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -9,7 +10,8 @@ public class SlotSelectMock : MonoBehaviour
     public static SlotSelectMock Instance { get; private set; }
     
     public MedicineType selectedMedicineType;
-    
+    public event Action<MedicineType> OnMedicineTypeChanged;
+
     [Header("UI Settings")]
     [SerializeField] private GameObject[] lockUIPrefab;
     [SerializeField] private float unlockHoldTime = 2f;
@@ -58,7 +60,8 @@ public class SlotSelectMock : MonoBehaviour
 
         UIManager.Instance.SelectSlot(0);
         selectedMedicineType = MedicineType.Medicine1;
-        
+        OnMedicineTypeChanged?.Invoke(selectedMedicineType);
+
         InvokeRepeating(nameof(AddPointsPerSecond), 1f, 1f);
     }
     
@@ -76,6 +79,8 @@ public class SlotSelectMock : MonoBehaviour
                     {
                         UIManager.Instance.SelectSlot(i);
                         selectedMedicineType = (MedicineType)(1<<i);
+
+                        OnMedicineTypeChanged?.Invoke(selectedMedicineType);
                     }
                 }
                 else
@@ -96,6 +101,8 @@ public class SlotSelectMock : MonoBehaviour
                         UnlockSlot(i);
                         UIManager.Instance.SelectSlot(i);
                         selectedMedicineType = (MedicineType)(1<<i);
+
+                        OnMedicineTypeChanged?.Invoke(selectedMedicineType);
                     }
                 }
             }
