@@ -13276,6 +13276,8 @@ MonoBehaviour:
   soundResources:
   - key: BGM
     Clip: {fileID: 8300000, guid: b4cfd5bb865367a4994e2d81b69fee41, type: 3}
+  - key: BGM_melody_only
+    Clip: {fileID: 8300000, guid: 28586143d769079428bb4375f3ef0b1a, type: 3}
   - key: BGM_Lose
     Clip: {fileID: 8300000, guid: dde84ea531a8b08408fe3c0c55709ff2, type: 3}
   - key: GetDamaged_Bad
@@ -13283,7 +13285,7 @@ MonoBehaviour:
   - key: GetDamaged_Default
     Clip: {fileID: 8300000, guid: 4c29fe45548a1ec47a28a273d7dda6d7, type: 3}
   - key: GetDamaged_Good
-    Clip: {fileID: 8300000, guid: eaebcace1fa4c19479932dc4fc2a35e1, type: 3}
+    Clip: {fileID: 8300000, guid: 0316e1ff24e03674ba7f9d58fa894e1b, type: 3}
   - key: GetDamaged_shield
     Clip: {fileID: 8300000, guid: 61893bc3b00bbe74d848de4dedaa677d, type: 3}
   - key: Shoot
@@ -13306,7 +13308,15 @@ MonoBehaviour:
     Clip: {fileID: 8300000, guid: e23c4a3dd1cec6a4687cbcacde3946aa, type: 3}
   - key: Death_of_machine
     Clip: {fileID: 8300000, guid: 45695a46d64a479459aa062c7db1ff90, type: 3}
-  poolSize: 20
+  - key: Damage_to_cell
+    Clip: {fileID: 8300000, guid: 2e8d6ae732523fd45bb950025a32907a, type: 3}
+  - key: Get_sick
+    Clip: {fileID: 8300000, guid: 30c0877451c76404e833da9694f2f066, type: 3}
+  - key: Heartbeat_normal
+    Clip: {fileID: 8300000, guid: d89dd9f7f64f91040a0d4b247dbfdb03, type: 3}
+  - key: Heartbeat_disease
+    Clip: {fileID: 8300000, guid: 4787ae697a127be429c4b426730bf498, type: 3}
+  poolSize: 50
   soundNodePrefab: {fileID: 3179050972271029704, guid: 92d0152613ea5464eb373e9b96194dcd, type: 3}
   audioSource_BGM: {fileID: 1046518262}
 --- !u!82 &1046518262

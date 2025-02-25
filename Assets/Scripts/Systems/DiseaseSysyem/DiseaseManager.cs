@@ -64,6 +64,7 @@ public class DiseaseManager : MonoBehaviour
             diseasedTexts[index].color = Color.red;
             sumDamage += diseaseDamage[index];
             //UpdateBloodScreenImage();
+            SoundManager.Instance.PlaySound("Get_sick", transform.position);
         }
     }
     

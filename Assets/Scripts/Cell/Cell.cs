@@ -56,6 +56,7 @@ public class Cell : MonoBehaviour, IDamageable
         
         
         currentHp -= damage;
+        SoundManager.Instance.PlaySound("Damage_to_cell", transform.position);
         //Debug.Log("ダメージを受けました。 現在HP: " + hp);
 
         if (currentHp <= 0f)
