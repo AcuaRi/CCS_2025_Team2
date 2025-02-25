@@ -3046,11 +3046,11 @@ MonoBehaviour:
   resistantShieldParent: {fileID: 998773720}
   countdownText: {fileID: 672974775}
   slotImages:
-  - {fileID: 1977879025}
   - {fileID: 711625423}
-  - {fileID: 524022990}
-  - {fileID: 1141592384}
   - {fileID: 1407492785}
+  - {fileID: 1977879025}
+  - {fileID: 1141592384}
+  - {fileID: 524022990}
   - {fileID: 997285095}
   - {fileID: 1707555864}
   - {fileID: 1820527498}
