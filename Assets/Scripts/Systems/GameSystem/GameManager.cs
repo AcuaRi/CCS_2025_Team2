@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public float RemainingTime => remainingTime;
     private bool isPaused = false;
     public bool IsPaused => isPaused;
+    private bool isWaveRunning = false;
     
     
     private void Awake()
@@ -37,11 +38,9 @@ public class GameManager : MonoBehaviour
         currentHp = maxHp;
         UIManager.Instance.SetBodyHpGaugeUI(currentHp, maxHp);
         
-        StartCoroutine(SpawnWaves());
+        //StartCoroutine(SpawnWaves());
         
-        
-        //EnemyGenerator.Instance.GenerateEnemy("Enemy_Bacillus", 1, 1, 1);
-        
+        StartCoroutine(UpdateGameTime());
     }
     
     private IEnumerator SpawnWaves()
@@ -138,5 +137,22 @@ public class GameManager : MonoBehaviour
             SoundManager.Instance.PlayBGM("BGM_Lose");
             SceneLoader.LoadSceneFast("ResultScene");
         }
+    }
+    
+    private IEnumerator UpdateGameTime()
+    {
+        while (remainingTime > 0)
+        {
+            yield return new WaitForSeconds(1);
+            
+            if (!isWaveRunning)
+            {
+                isWaveRunning = true;
+                yield return StartCoroutine(WaveManager.Instance.NextWave(playTime - remainingTime));
+                isWaveRunning = false;
+            }
+        }
+        
+        //no remaining time
     }
 }

@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -36,6 +38,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Color unhighlightedSlotColor;
     [Tooltip("GameObject of the pausePanel")]
     [SerializeField] private GameObject pausePanel;
+    [Tooltip("GameObject of the warningPanel")]
+    [SerializeField] private GameObject warningPanel;
     
     private int selectedSlotIndex = 0;
     
@@ -150,5 +154,14 @@ public class UIManager : MonoBehaviour
     public void SetPausePanel(bool isPaused)
     {
         pausePanel.SetActive(isPaused);
+    }
+    
+    public void ShowWarning(string message, float duration)
+    {
+        warningPanel.SetActive(true); // 활성화
+        var warn = warningPanel.GetComponent<WarningPanel>();
+        warn.SetWarningText(message);
+        warn.SetDuration(duration);
+        StartCoroutine(warn.WarningRoutine(duration));
     }
 }
