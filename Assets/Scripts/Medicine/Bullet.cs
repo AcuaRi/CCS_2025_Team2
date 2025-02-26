@@ -19,22 +19,20 @@ public class Bullet : MonoBehaviour
     protected Vector3 startingPoint;
     protected Vector3 addVector;
     protected Vector3 direction;
-    protected Transform thisTransform;
     
-    private void Update()
+    protected virtual void Update()
     {
-        //Vector3 newPosition;
-        //newPosition = thisTransform.position + addVector * speed;
-        //transform.position = new Vector3(newPosition.x, newPosition.y, newPosition.z);
         transform.position += Time.deltaTime * speed * addVector;
-        _checkDistance();
+        if (_checkDistance())
+        {
+            Destroy(gameObject);
+        }
     }
 
     protected virtual void Start()
     {
         playerObj = GameObject.Find("Player"); // ��肭�����Ȃ�������G���[�f���Ăق���
         setStartPoint(playerObj.transform.position);
-        thisTransform = transform;
         //addVector = 100 * new Vector3(direction.x * Time.deltaTime, direction.y * Time.deltaTime, 0);
         addVector = new Vector3(direction.x, direction.y, 0);
         addVector.Normalize();
@@ -43,13 +41,14 @@ public class Bullet : MonoBehaviour
         SoundManager.Instance.PlaySound("Shoot", transform.position);
     }
 
-    protected virtual void _checkDistance()
+    protected bool _checkDistance()
     {
         distance_P = (startingPoint - transform.position).sqrMagnitude;
         if (distance_P > deleteDistance)
         {
-            Destroy(gameObject);
+            return true;
         }
+        return false;
     }
 
     public void getVector(Vector3 from, Vector3 to)
@@ -67,7 +66,7 @@ public class Bullet : MonoBehaviour
         this._medicineType = medicinetype;
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    protected virtual void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.layer == 21) //Enemy
         {
