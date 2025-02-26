@@ -1,0 +1,189 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5886143225152581405
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2652706684003668849}
+  - component: {fileID: 438952635155876992}
+  - component: {fileID: 3833572036004287736}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2652706684003668849
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5886143225152581405}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &438952635155876992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5886143225152581405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb18cbe028d5f4f40943165c61c5ea66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundResources:
+  - key: BGM
+    Clip: {fileID: 8300000, guid: b4cfd5bb865367a4994e2d81b69fee41, type: 3}
+  - key: BGM_melody_only
+    Clip: {fileID: 8300000, guid: 28586143d769079428bb4375f3ef0b1a, type: 3}
+  - key: BGM_Lose
+    Clip: {fileID: 8300000, guid: dde84ea531a8b08408fe3c0c55709ff2, type: 3}
+  - key: GetDamaged_Bad
+    Clip: {fileID: 8300000, guid: 39bf721566f65e5468039abd8211398f, type: 3}
+  - key: GetDamaged_Default
+    Clip: {fileID: 8300000, guid: 4c29fe45548a1ec47a28a273d7dda6d7, type: 3}
+  - key: GetDamaged_Good
+    Clip: {fileID: 8300000, guid: 0316e1ff24e03674ba7f9d58fa894e1b, type: 3}
+  - key: GetDamaged_shield
+    Clip: {fileID: 8300000, guid: 61893bc3b00bbe74d848de4dedaa677d, type: 3}
+  - key: Shoot
+    Clip: {fileID: 8300000, guid: 3f5bfa2eb7c6c234c8920b7da794c774, type: 3}
+  - key: Alert_before_wave1
+    Clip: {fileID: 8300000, guid: ff47d231898e36b46b45ecbdf9e95372, type: 3}
+  - key: Alert_before_wave2
+    Clip: {fileID: 8300000, guid: 3b7d1ba2a084a314d9954b9f97ae8a56, type: 3}
+  - key: Alert_before_wave3
+    Clip: {fileID: 8300000, guid: 71f33214d028d4b4cbdfced3178f0483, type: 3}
+  - key: Alert_before_wave4
+    Clip: {fileID: 8300000, guid: bc2fcc984615e3f418ce5bb6450467b4, type: 3}
+  - key: Alert_before_wave5
+    Clip: {fileID: 8300000, guid: 7cb360aa18c06944d82a9a7bfb44ff65, type: 3}
+  - key: Open_pause
+    Clip: {fileID: 8300000, guid: 9b2cd0933caf03942af7f4cb06ffd99a, type: 3}
+  - key: Close_pause
+    Clip: {fileID: 8300000, guid: d333f57d3f2fb7c45ab5506b003b3056, type: 3}
+  - key: Damage_to_player
+    Clip: {fileID: 8300000, guid: e23c4a3dd1cec6a4687cbcacde3946aa, type: 3}
+  - key: Death_of_machine
+    Clip: {fileID: 8300000, guid: 45695a46d64a479459aa062c7db1ff90, type: 3}
+  - key: Damage_to_cell
+    Clip: {fileID: 8300000, guid: 2e8d6ae732523fd45bb950025a32907a, type: 3}
+  - key: Get_sick
+    Clip: {fileID: 8300000, guid: 30c0877451c76404e833da9694f2f066, type: 3}
+  - key: Heartbeat_normal
+    Clip: {fileID: 8300000, guid: d89dd9f7f64f91040a0d4b247dbfdb03, type: 3}
+  - key: Heartbeat_disease
+    Clip: {fileID: 8300000, guid: 4787ae697a127be429c4b426730bf498, type: 3}
+  poolSize: 50
+  soundNodePrefab: {fileID: 3179050972271029704, guid: 92d0152613ea5464eb373e9b96194dcd, type: 3}
+  audioSource_BGM: {fileID: 3833572036004287736}
+--- !u!82 &3833572036004287736
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5886143225152581405}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
