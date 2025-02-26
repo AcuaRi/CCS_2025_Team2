@@ -5,6 +5,7 @@ public static class SceneLoader
 {
     public static void LoadSceneFast(string sceneName)
     {
+        SoundManager.Instance.StopBGM();
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene(sceneName);
     }
@@ -16,6 +17,7 @@ public static class SceneLoader
     
     public static async UniTask LoadScene(string sceneName)
     {
+        SoundManager.Instance.StopBGM();
         await LoadLoadingScene();
         
         LoadingScreen loadingScreen = LoadingScreen.Instance;
