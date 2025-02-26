@@ -46,6 +46,6 @@ MonoBehaviour:
   divisionCoolTime: 10
   divisionProbability: 0.2
   goodMedicineTypes: 0
-  badMedicineTypes: 70
+  badMedicineTypes: 81
   resistantMedicineType: 0
   points: 1
