@@ -40,6 +40,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
     [Tooltip("GameObject of the warningPanel")]
     [SerializeField] private GameObject warningPanel;
+    [Tooltip("GameObject of the warningPanel")]
+    [SerializeField] private GameObject UIInfoPanel;
     
     private int selectedSlotIndex = 0;
     
@@ -163,5 +165,10 @@ public class UIManager : MonoBehaviour
         warn.SetWarningText(message);
         warn.SetDuration(duration);
         StartCoroutine(warn.WarningRoutine(duration));
+    }
+
+    public UIInfoPanel GetUIInfoPanel()
+    {
+        return UIInfoPanel.GetComponent<UIInfoPanel>();
     }
 }
