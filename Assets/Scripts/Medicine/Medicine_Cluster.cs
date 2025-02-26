@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Medicine_Cluster;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Medicine_Cluster : Bullet
 {
@@ -16,11 +18,10 @@ public class Medicine_Cluster : Bullet
         Omni          // 8����
     }
 
-
-    protected override void _checkDistance()
+    protected override void Update()
     {
-        distance_P = (playerObj.transform.position - transform.position).sqrMagnitude;
-        if (distance_P > deleteDistance)
+        transform.position += Time.deltaTime * speed * addVector;
+        if (_checkDistance())
         {
             // ここで弾生成
             if (clusterType == ClusterType.Triple)

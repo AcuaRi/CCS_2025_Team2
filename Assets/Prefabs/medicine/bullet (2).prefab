@@ -193,5 +193,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1bde35c0ddfd2a4685c20d52c33210a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  deleteDistance: 100
+  speed: 25
+  deleteDistance: 75

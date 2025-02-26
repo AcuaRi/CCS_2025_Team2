@@ -251,6 +251,7 @@ public class Player : MonoBehaviour, IDamageable
 
         bullet = bulletPrefabs[_medicineNum - 1];
         _currentMode = shootingModes[_medicineNum - 1];
+        _isShooting = false;
         Debug.Log("MedicineType が変更されました: " + newType);
     }
 
@@ -333,7 +334,7 @@ public class Player : MonoBehaviour, IDamageable
         while (_isShooting)
         {
             GameObject b = Instantiate(bullet, transform.position + bulletPoint, Quaternion.identity);
-            b.GetComponent<Bullet>().getVector(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            // b.GetComponent<Bullet>().getVector(Vector3.zero, Vector3.zero);
             yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);
         }
         _shootingCoroutine = null;
