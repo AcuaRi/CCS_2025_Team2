@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
+using UnityEngine.Pool;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -18,6 +19,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject hpGaugePrefab;
     [Tooltip("Resistant Shield Prefab")]
     [SerializeField] private GameObject resistantShieldPrefab;
+    [Tooltip("Damage Numerical Effect Prefab")]
+    [SerializeField] private GameObject damageNumericalEffectPrefab;
     
     [Header("UI Elements")]
     [Tooltip("BodyHpGauge Image")]
@@ -28,6 +31,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform EnemyHpGaugeParent;
     [Tooltip("Resistant Shield Parent Transform")]
     [SerializeField] private Transform resistantShieldParent;
+    [Tooltip("Damage Numerical Effect Parent Transform")]
+    [SerializeField] private Transform damageNumericalEffectParent;
     [Tooltip("Countdown text (TextMeshProUGUI)")]
     [SerializeField] private TextMeshProUGUI countdownText;
     [Tooltip("Slot Image")]
@@ -45,17 +50,24 @@ public class UIManager : MonoBehaviour
     
     private int selectedSlotIndex = 0;
     
+    private ObjectPool<GameObject> damageEffectPool;
+    
     private void Awake()
     {
-        // 싱글턴 설정
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
         Instance = this;
-        // 씬 전환 시 유지하려면 아래 주석 해제
-        // DontDestroyOnLoad(gameObject);
+        
+        damageEffectPool = new ObjectPool<GameObject>(
+            CreateEffect,
+            OnTakeFromPool,
+            OnReturnToPool,
+            OnDestroyEffect,
+            maxSize: 200
+        );
     }
 
     private void Start()
@@ -131,9 +143,7 @@ public class UIManager : MonoBehaviour
     {
         if (countdownText != null)
         {
-            // 남은 시간을 TimeSpan으로 변환 (TimeSpan은 전체 시간을 "분", "초", "밀리초" 등으로 분리해줍니다)
             TimeSpan timeSpan = TimeSpan.FromSeconds(remainingTime);
-            // "mm:ss:fff" 형식으로 변환하여 텍스트에 할당 (mm: 분, ss: 초, fff: 밀리초)
             countdownText.text = timeSpan.ToString(@"mm\:ss\:fff");
         }
         else
@@ -160,7 +170,7 @@ public class UIManager : MonoBehaviour
     
     public void ShowWarning(string message, float duration)
     {
-        warningPanel.SetActive(true); // 활성화
+        warningPanel.SetActive(true);
         var warn = warningPanel.GetComponent<WarningPanel>();
         warn.SetWarningText(message);
         warn.SetDuration(duration);
@@ -170,5 +180,33 @@ public class UIManager : MonoBehaviour
     public UIInfoPanel GetUIInfoPanel()
     {
         return UIInfoPanel.GetComponent<UIInfoPanel>();
+    }
+    
+    private GameObject CreateEffect()
+    {
+        var effect = Instantiate(damageNumericalEffectPrefab, damageNumericalEffectParent);
+        effect.GetComponent<DamageNumericalEffect>().Initialize(damageEffectPool);
+        return effect;
+    }
+
+    private void OnTakeFromPool(GameObject effect)
+    {
+        effect.SetActive(true);
+    }
+
+    private void OnReturnToPool(GameObject effect)
+    {
+        effect.SetActive(false);
+    }
+
+    private void OnDestroyEffect(GameObject effect)
+    {
+        Destroy(effect);
+    }
+
+    public void ShowDamageEffect(float damage, int damageType, Transform target)
+    {
+        var effect = damageEffectPool.Get().GetComponent<DamageNumericalEffect>();
+        effect.SetDamageNumericalEffect(damage, damageType, target);
     }
 }

@@ -369,12 +369,14 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         
         
         float caculatedDamage = damage;
+        int damageType = 4; //good: 1, bad: 2, resistant: 3, dafault: 4
         
         //Case of resistant medicine
         if ((medicineType & generalMonsterData.resistantMedicineType) == medicineType)
         {
             caculatedDamage = damage / 10;
             SoundManager.Instance.PlaySound("GetDamaged_shield", transform.position);
+            damageType = 3;
         }
         
         //Case of good medicine
@@ -383,6 +385,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
             caculatedDamage = damage * 5;
             SoundManager.Instance.PlaySound("GetDamaged_Good", transform.position);
             //SoundManager.Instance.PlaySound("Test", transform.position);
+            damageType = 1;
         }
         
         //Case of bad medicine
@@ -390,6 +393,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         {
             caculatedDamage = damage / 10;
             SoundManager.Instance.PlaySound("GetDamaged_Bad", transform.position);
+            damageType = 2;
         }
         //default?
         else
@@ -404,6 +408,8 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         {
             hpGaugeInstance.gameObject.SetActive(true);
         }
+        
+        UIManager.Instance.ShowDamageEffect(caculatedDamage, damageType, this.transform);
         
         UpdateHpGauge();
         if (force.magnitude > 0.1f)
