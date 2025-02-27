@@ -5299,7 +5299,7 @@ MonoBehaviour:
   - {fileID: 1010564153}
   - {fileID: 41074837}
   unlockHoldTime: 0.5
-  currentPoints: 500
+  currentPoints: 0
   unlockCosts: 00000000500000000000000050000000320000006400000032000000320000003200000064000000
   currentPointsText: {fileID: 1721367253}
   pointsPerSecond: 1
@@ -19778,7 +19778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetCamera: {fileID: 1456788569}
-  zoomSpeed: 5
+  zoomSpeed: 10
   minZoom: 5
   maxZoom: 30
 --- !u!1001 &1461421681
