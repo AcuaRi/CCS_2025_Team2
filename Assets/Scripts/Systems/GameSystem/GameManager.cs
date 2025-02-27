@@ -138,6 +138,12 @@ public class GameManager : MonoBehaviour
             SceneLoader.LoadSceneFast("ResultScene");
         }
     }
+
+    public void RecoveryBody(float heal)
+    {
+        this.currentHp += heal;
+        UIManager.Instance.SetBodyHpGaugeUI(currentHp, maxHp);
+    }
     
     private IEnumerator UpdateGameTime()
     {

@@ -109,7 +109,7 @@ public class UIManager : MonoBehaviour
 
         if (bodyHpGaugeText != null)
         {
-            bodyHpGaugeText.text = $"{Mathf.CeilToInt(currentHp)}/{Mathf.CeilToInt(maxHp)}";
+            bodyHpGaugeText.text = $"{currentHp:F1}/{Mathf.CeilToInt(maxHp)}";
         }
     }
     

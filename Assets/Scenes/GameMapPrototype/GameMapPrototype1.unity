@@ -32847,20 +32847,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a48b373c19cf3d044aa31ff77390d390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageInterval: 5
+  damageInterval: 0.2
   counts: 00000000000000000000000000000000000000000000000000000000000000000000000000000000
-  diseasethreshold: 0a000000140000001400000015000000050000000a0000000a00000014000000050000000a000000
+  diseasethreshold: 050000000a0000000a0000000b0000000300000005000000050000000a0000000300000005000000
   diseaseDamage:
-  - 3
-  - 3
-  - 3
-  - 3
-  - 3
-  - 3
-  - 3
-  - 3
-  - 3
-  - 3
+  - 1
+  - 1
+  - 1
+  - 1
+  - 2
+  - 1
+  - 1
+  - 1
+  - 2
+  - 1
   bloodScreenImage: {fileID: 1577396650}
   diseasedSlots:
   - {fileID: 958150357}

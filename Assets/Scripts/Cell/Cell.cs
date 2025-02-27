@@ -80,6 +80,7 @@ public class Cell : MonoBehaviour, IDamageable
         _sr.color = _originalColor;
         _isHitEffectPlaying = false;
         ResetRecoveryTimer();
+        GameManager.Instance.GetDamagedInBody(0.1f);
         this.gameObject.SetActive(false);
     }
 
@@ -100,6 +101,8 @@ public class Cell : MonoBehaviour, IDamageable
         
         this.gameObject.SetActive(true);
         _recoveryTimer = 0;
+        
+        GameManager.Instance.RecoveryBody(0.1f);
     }
 
     /// <summary>
