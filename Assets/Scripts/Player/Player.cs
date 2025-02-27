@@ -89,25 +89,6 @@ public class Player : MonoBehaviour, IDamageable
         _Move();
         // _medicineChoice();
         // Debug.Log(_isCoroutine);
-
-        if (_isShooting && _shootingCoroutine == null)
-        {
-            switch (_currentMode)
-            {
-                case ShootingMode.Single:
-                    _shootingCoroutine = StartCoroutine(shootingTypeSingle());
-                    break;
-                case ShootingMode.Triple:
-                    _shootingCoroutine = StartCoroutine(shootingTypeTriple());
-                    break;
-                case ShootingMode.Omni:
-                    _shootingCoroutine = StartCoroutine(shootingTypeOmni());
-                    break;
-                case ShootingMode.Landmine:
-                    _shootingCoroutine = StartCoroutine(shootingTypeLandmine());
-                    break;
-            }
-        }
     }
 
     public void _OnMove(InputAction.CallbackContext context)
@@ -121,14 +102,31 @@ public class Player : MonoBehaviour, IDamageable
 
     public void _OnFire(InputAction.CallbackContext context)
     {
-        if (GameManager.Instance.IsPaused == true)
+        if (GameManager.Instance.IsPaused == true || !isAlive)
         {
             return;
         }
         if (context.performed)
         {
-            if(!isAlive) return;
-            _isShooting = true;
+            if (_shootingCoroutine == null)
+            {
+                _isShooting = true;
+                switch (_currentMode)
+                {
+                    case ShootingMode.Single:
+                        _shootingCoroutine = StartCoroutine(shootingTypeSingle());
+                        break;
+                    case ShootingMode.Triple:
+                        _shootingCoroutine = StartCoroutine(shootingTypeTriple());
+                        break;
+                    case ShootingMode.Omni:
+                        _shootingCoroutine = StartCoroutine(shootingTypeOmni());
+                        break;
+                    case ShootingMode.Landmine:
+                        _shootingCoroutine = StartCoroutine(shootingTypeLandmine());
+                        break;
+                }
+            }
             /*GameObject b = Instantiate(bullet, transform.position + bulletPoint, Quaternion.identity);
             b.GetComponent<Bullet>().getVector(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));*/
         }
@@ -143,11 +141,11 @@ public class Player : MonoBehaviour, IDamageable
         if (context.canceled)
         {
             _isShooting= false;
-            if (_shootingCoroutine != null) // �R���[�`���������Ă�����~�߂�
+            /*if (_shootingCoroutine != null) // �R���[�`���������Ă�����~�߂�
             {
                 StopCoroutine(_shootingCoroutine);
                 _shootingCoroutine = null;
-            }
+            }*/
         }
     }
 
@@ -266,7 +264,7 @@ public class Player : MonoBehaviour, IDamageable
 
     IEnumerator shootingTypeSingle()
     {
-        while (_isShooting)
+        while (_isShooting && isAlive)
         {
             GameObject b = Instantiate(bullet, transform.position + bulletPoint, Quaternion.identity);
             b.GetComponent<Bullet>().getVector(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
@@ -274,11 +272,12 @@ public class Player : MonoBehaviour, IDamageable
             yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);
         }
         _shootingCoroutine = null;
+        StopCoroutine(_shootingCoroutine);
     }
 
     IEnumerator shootingTypeTriple()
     {
-        while (_isShooting)
+        while (_isShooting && isAlive)
         {
             // �v���C���[����}�E�X�ւ̕������擾�i���K���j
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -304,11 +303,12 @@ public class Player : MonoBehaviour, IDamageable
             yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);
         }
         _shootingCoroutine = null;
+        StopCoroutine(_shootingCoroutine);
     }
 
     IEnumerator shootingTypeOmni()
     {
-        while (_isShooting)
+        while (_isShooting && isAlive)
         {
             // 8�����̔��ˊp�x�i0�x, 45�x, 90�x, ..., 315�x�j
             float[] angles = { 0f, 45f, 90f, 135f, 180f, 225f, 270f, 315f };
@@ -327,17 +327,19 @@ public class Player : MonoBehaviour, IDamageable
             yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);
         }
         _shootingCoroutine = null;
+        StopCoroutine(_shootingCoroutine);
     }
 
     IEnumerator shootingTypeLandmine() // explodes after ○○s
     {
-        while (_isShooting)
+        while (_isShooting && isAlive)
         {
             GameObject b = Instantiate(bullet, transform.position + bulletPoint, Quaternion.identity);
             // b.GetComponent<Bullet>().getVector(Vector3.zero, Vector3.zero);
             yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);
         }
         _shootingCoroutine = null;
+        StopCoroutine(_shootingCoroutine);
     }
 
     public float GetPlayerHP()
