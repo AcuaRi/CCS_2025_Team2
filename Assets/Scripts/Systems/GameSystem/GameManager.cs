@@ -142,6 +142,7 @@ public class GameManager : MonoBehaviour
     public void RecoveryBody(float heal)
     {
         this.currentHp += heal;
+        if (currentHp > maxHp) currentHp = maxHp;
         UIManager.Instance.SetBodyHpGaugeUI(currentHp, maxHp);
     }
     
