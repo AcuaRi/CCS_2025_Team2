@@ -271,8 +271,9 @@ public class Player : MonoBehaviour, IDamageable
             b.GetComponent<Bullet>().setMedicineType(_medicineType);
             yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);
         }
-        _shootingCoroutine = null;
+        //_shootingCoroutine = null;
         StopCoroutine(_shootingCoroutine);
+        _shootingCoroutine = null;
     }
 
     IEnumerator shootingTypeTriple()
@@ -302,8 +303,9 @@ public class Player : MonoBehaviour, IDamageable
 
             yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);
         }
-        _shootingCoroutine = null;
+        //_shootingCoroutine = null;
         StopCoroutine(_shootingCoroutine);
+        _shootingCoroutine = null;
     }
 
     IEnumerator shootingTypeOmni()
@@ -326,8 +328,9 @@ public class Player : MonoBehaviour, IDamageable
 
             yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);
         }
-        _shootingCoroutine = null;
+        //_shootingCoroutine = null;
         StopCoroutine(_shootingCoroutine);
+        _shootingCoroutine = null;
     }
 
     IEnumerator shootingTypeLandmine() // explodes after ○○s
@@ -338,8 +341,9 @@ public class Player : MonoBehaviour, IDamageable
             // b.GetComponent<Bullet>().getVector(Vector3.zero, Vector3.zero);
             yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);
         }
-        _shootingCoroutine = null;
+        //_shootingCoroutine = null;
         StopCoroutine(_shootingCoroutine);
+        _shootingCoroutine = null;
     }
 
     public float GetPlayerHP()

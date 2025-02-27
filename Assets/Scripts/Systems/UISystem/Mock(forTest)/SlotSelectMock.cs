@@ -99,6 +99,7 @@ public class SlotSelectMock : MonoBehaviour
                     if (holdTimers[i] >= unlockHoldTime)
                     {
                         UnlockSlot(i);
+                        IncreaseUnlockCost(30);
                         UIManager.Instance.SelectSlot(i);
                         selectedMedicineType = (MedicineType)(1<<i);
 
@@ -182,5 +183,18 @@ public class SlotSelectMock : MonoBehaviour
     public void IncreaseCurrentPoints(int points)
     {
         currentPoints += points;
+    }
+
+    public void IncreaseUnlockCost(int points)
+    {
+        for(int i = 0; i < unlockCosts.Length; i++)
+        {
+            unlockCosts[i] += points;
+        }
+
+        for(int i = 0; i < unlockProgressTexts.Length; i++)
+        {
+            unlockProgressTexts[i].text = unlockCosts[i].ToString();
+        }
     }
 }
