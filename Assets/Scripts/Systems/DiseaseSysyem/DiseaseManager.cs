@@ -100,6 +100,10 @@ public class DiseaseManager : MonoBehaviour
                 UpdateBloodScreenImage();
                 FadeOutBloodScreenImage();
             }
+            else
+            {
+                GameManager.Instance.RecoveryBody(0.1f);
+            }
             
             yield return new WaitForSeconds(damageInterval);
         }
