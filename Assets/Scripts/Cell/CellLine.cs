@@ -29,14 +29,20 @@ public class CellLine : MonoBehaviour
             if (HasActiveNeighbor(i))
             {
                 cells[i].DecreaseRecoveryTimer(1);
-                if (cells[i].RecoveryTimer == 0)
+                var random = Random.Range(0f, 1f);
+                if (random >= (float)cells[i].RecoveryTimer / cells[i].RecoveryTime)
                 {
                     cells[i].RecoveryCell(); 
                 }
             }
             else
             {
-                cells[i].ResetRecoveryTimer();
+                //cells[i].ResetRecoveryTimer();
+                var random = Random.Range(0f, 1f);
+                if (random >= 0.99f)
+                {
+                    cells[i].RecoveryCell(); 
+                }
             }
         }
     }

@@ -15,7 +15,8 @@ public class Cell : MonoBehaviour, IDamageable
     // 被撃効果重複実行防止用フラッグ
     private bool _isHitEffectPlaying = false;
 
-    [SerializeField] private int recoveryTime = 30;
+    [SerializeField] private int recoveryTime = 20;
+    public int RecoveryTime => recoveryTime;
     private int _recoveryTimer = 0;
     public int RecoveryTimer => _recoveryTimer;
 
