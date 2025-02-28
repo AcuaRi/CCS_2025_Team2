@@ -10,12 +10,29 @@ public class Medicine_Cluster : Bullet
     [SerializeField]
     private GameObject bullet;
     [SerializeField]
+    private bool _setStartBool = true;
+    [SerializeField]
     private ClusterType clusterType;
 
     public enum ClusterType
     {
         Triple,       // 3����
         Omni          // 8����
+    }
+
+    protected override void Start()
+    {
+        if (_setStartBool)
+        {
+            playerObj = GameObject.Find("Player"); // ��肭�����Ȃ�������G���[�f���Ăق���
+            setStartPoint(playerObj.transform.position);
+        }
+        //addVector = 100 * new Vector3(direction.x * Time.deltaTime, direction.y * Time.deltaTime, 0);
+        addVector = new Vector3(direction.x, direction.y, 0);
+        addVector.Normalize();
+        //Debug.Log(addVector);
+
+        SoundManager.Instance.PlaySound("Shoot", transform.position);
     }
 
     protected override void Update()
@@ -52,9 +69,9 @@ public class Medicine_Cluster : Bullet
                 Vector3 bulletDirection = new Vector3(Mathf.Cos(finalAngle * Mathf.Deg2Rad), Mathf.Sin(finalAngle * Mathf.Deg2Rad), 0f);
 
                 GameObject b = Instantiate(bullet, transform.position, Quaternion.identity);
-                b.GetComponent<Bullet>().getVector(transform.position, transform.position + bulletDirection);
-                b.GetComponent<Bullet>().setStartPoint(transform.position);
+                b.GetComponent<Bullet>().getVector(transform.position, transform.position + bulletDirection);                
                 b.GetComponent<Bullet>().setMedicineType(_medicineType);
+                b.GetComponent<Bullet>().setStartPoint(transform.position);
         }
     }
 
@@ -70,8 +87,8 @@ public class Medicine_Cluster : Bullet
                 // �e�𐶐����A������ݒ�
                 GameObject b = Instantiate(bullet, transform.position, Quaternion.identity);
                 b.GetComponent<Bullet>().getVector(transform.position, transform.position + bulletDirection);
-                b.GetComponent<Bullet>().setStartPoint(transform.position);
                 b.GetComponent<Bullet>().setMedicineType(_medicineType);
+                b.GetComponent<Bullet>().setStartPoint(transform.position);
         }
     }
 }

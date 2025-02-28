@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 254541781946723456}
   - component: {fileID: 525783366556029286}
-  - component: {fileID: 2784270377130953407}
+  - component: {fileID: -3642361487179494996}
   - component: {fileID: 246296115244841391}
   m_Layer: 0
-  m_Name: bullet (4) C
+  m_Name: bullet (10) C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1804033003107945717}
+  - {fileID: 5821661916032709674}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &525783366556029286
@@ -62,7 +62,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!70 &2784270377130953407
+--- !u!70 &-3642361487179494996
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,15 +112,15 @@ MonoBehaviour:
   _rotationbool: 0
   _rotationSpeed: 1000
   speed: 10
-  deleteDistance: 25
-  firingRate: 0
-  shootingMode: 0
+  deleteDistance: 50
+  firingRate: 1
+  shootingMode: 2
   _damageToEnemy: 10
   _damageToCell: 10
   bullet: {fileID: 1913493599678101969, guid: ecc6bd21449a60e4a8abe5b8742fed30, type: 3}
-  _setStartBool: 1
-  clusterType: 0
---- !u!1001 &6407352747252411429
+  _setStartBool: 0
+  clusterType: 1
+--- !u!1001 &1236512692156650746
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -130,7 +130,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2116456997309805562, guid: ae07f6a98709df147afbee8499151754, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2116456997309805562, guid: ae07f6a98709df147afbee8499151754, type: 3}
       propertyPath: m_Color.g
@@ -186,7 +186,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7529961020374382544, guid: ae07f6a98709df147afbee8499151754, type: 3}
       propertyPath: visual_Medicine_Color.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7529961020374382544, guid: ae07f6a98709df147afbee8499151754, type: 3}
       propertyPath: visual_Medicine_Color.g
@@ -201,8 +201,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae07f6a98709df147afbee8499151754, type: 3}
---- !u!4 &1804033003107945717 stripped
+--- !u!4 &5821661916032709674 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4747439510966427856, guid: ae07f6a98709df147afbee8499151754, type: 3}
-  m_PrefabInstance: {fileID: 6407352747252411429}
+  m_PrefabInstance: {fileID: 1236512692156650746}
   m_PrefabAsset: {fileID: 0}

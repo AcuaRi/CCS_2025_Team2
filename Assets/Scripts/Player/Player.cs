@@ -30,18 +30,15 @@ public class Player : MonoBehaviour, IDamageable
     private bool _isShooting;
     private Coroutine _shootingCoroutine;
 
-    [SerializeField]
     private MedicineType _medicineType = MedicineType.Medicine1; // �����l
     private int _medicineNum = 1;
     // �������牺�͒e���ꂼ��̏��A�f�[�^�V�X�e���I�Ȃ̂ɑg�ݍ��ނ���
     [SerializeField]
     private GameObject[] bulletPrefabs = new GameObject[10];
-    [SerializeField]
     private float[] _firingrate = new float[10];
-    [SerializeField]
-    private ShootingMode[] shootingModes = new ShootingMode[10];
+    private ShootingMode[] _shootingModes = new ShootingMode[10];
 
-    private ShootingMode _currentMode = ShootingMode.Single; // �����l��Single�ɐݒ�
+    private ShootingMode _currentMode;
 
     // �ˌ����[�h�̗񋓌^�A������������Ȃ���������
     public enum ShootingMode
@@ -61,6 +58,11 @@ public class Player : MonoBehaviour, IDamageable
         _originalColor = _sr.color;
         _currentHP = _playerHP;
         _isShooting = false;
+        for (int i = 0; i< 10; i++)
+        {
+            _firingrate[i] = bulletPrefabs[i].GetComponent<Bullet>().firingRate;
+            _shootingModes[i] = bulletPrefabs[i].GetComponent<Bullet>().shootingMode;
+        }
     }
 
     private void Start()
@@ -248,7 +250,7 @@ public class Player : MonoBehaviour, IDamageable
         }
 
         bullet = bulletPrefabs[_medicineNum - 1];
-        _currentMode = shootingModes[_medicineNum - 1];
+        _currentMode = _shootingModes[_medicineNum - 1];
         _isShooting = false;
         Debug.Log("MedicineType が変更されました: " + newType);
     }
