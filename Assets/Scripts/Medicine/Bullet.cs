@@ -33,6 +33,8 @@ public class Bullet : MonoBehaviour
     protected Vector3 startingPoint;
     protected Vector3 addVector;
     protected Vector3 direction;
+
+    [SerializeField] protected float _forceAmount = 20; 
     
     protected virtual void Update()
     {
@@ -93,7 +95,7 @@ public class Bullet : MonoBehaviour
             {
                 //enemy.GetDamaged(10f, MedicineType.Medicine1, Vector2.zero);
                 //enemy.GetDamaged(10f, SlotSelectMock.Instance.selectedMedicineType, 20f * (other.transform.position - transform.position).normalized);
-                enemy.GetDamaged(_damageToEnemy, _medicineType, 20f * (other.transform.position - transform.position).normalized);
+                enemy.GetDamaged(_damageToEnemy, _medicineType, _forceAmount * (other.transform.position - transform.position).normalized);
 
                 //enemy.GetDamaged(10f, _medicineType, 0 * (other.transform.position - transform.position).normalized);
             }

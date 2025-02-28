@@ -34,7 +34,7 @@ MonoBehaviour:
   hp: 10
   moveSpeed: 5
   moveDirection: {x: 1, y: -1}
-  targetLossRadius: 10
+  targetLossRadius: 15
   recognizeRadius: 1
   targetLayer:
     serializedVersion: 2
