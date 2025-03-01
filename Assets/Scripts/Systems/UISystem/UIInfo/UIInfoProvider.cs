@@ -25,7 +25,7 @@ public class UIInfoProvider : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (infoPanel != null)
         {
-            infoPanel.ClearInfo();
+            //infoPanel.ClearInfo();
         }
     }
 }
