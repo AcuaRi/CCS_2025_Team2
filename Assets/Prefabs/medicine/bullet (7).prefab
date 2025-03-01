@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 254541781946723456}
   - component: {fileID: 525783366556029286}
   - component: {fileID: 8136073336699191849}
-  - component: {fileID: -8295037827715227308}
+  - component: {fileID: 1907452439053984108}
   m_Layer: 0
-  m_Name: bullet (7) LM
+  m_Name: bullet (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7590430098426698598}
@@ -97,7 +97,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 8, y: 2.5}
   m_Direction: 1
---- !u!114 &-8295037827715227308
+--- !u!114 &1907452439053984108
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,22 +106,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1913493599678101969}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13b858be56a7ff6409831e5c52760da1, type: 3}
+  m_Script: {fileID: 11500000, guid: d1bde35c0ddfd2a4685c20d52c33210a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationbool: 0
   _rotationSpeed: 1000
-  speed: 0
-  deleteDistance: 0
-  firingRate: 0
+  speed: 20
+  deleteDistance: 400
+  firingRate: 0.05
   shootingMode: 0
-  _damageToEnemy: 10
-  _damageToCell: 10
+  _damageToEnemy: 5
+  _damageToCell: 2
   _forceAmount: 20
-  bullet: {fileID: 1913493599678101969, guid: ecc6bd21449a60e4a8abe5b8742fed30, type: 3}
-  _explosionTime: 4
-  _explosionTimes: 5
-  _explosionRate: 1
 --- !u!1001 &2933203317589212086
 PrefabInstance:
   m_ObjectHideFlags: 0
