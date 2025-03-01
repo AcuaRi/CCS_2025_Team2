@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8158078072779476073}
@@ -111,15 +111,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rotationbool: 0
   _rotationSpeed: 1000
-  speed: 0.1
-  deleteDistance: 900
-  firingRate: 0
-  shootingMode: 0
+  speed: 0
+  deleteDistance: 0
+  firingRate: 0.2
+  shootingMode: 3
   _damageToEnemy: 10
   _damageToCell: 2
   _forceAmount: 20
   bullet: {fileID: 1913493599678101969, guid: ecc6bd21449a60e4a8abe5b8742fed30, type: 3}
-  _explosionTime: 1
+  landmineLimit: 10
+  _explosionTime: 10
   _explosionTimes: 2
   _explosionRate: 1
 --- !u!1001 &3518749322581798073

@@ -113,7 +113,7 @@ MonoBehaviour:
   _rotationSpeed: 1000
   speed: 10
   deleteDistance: 25
-  firingRate: 0
+  firingRate: 0.2
   shootingMode: 0
   _damageToEnemy: 10
   _damageToCell: 10

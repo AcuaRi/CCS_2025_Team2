@@ -111,15 +111,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rotationbool: 0
   _rotationSpeed: 1000
-  speed: 0.1
-  deleteDistance: 900
-  firingRate: 0
-  shootingMode: 0
+  speed: 0
+  deleteDistance: 0
+  firingRate: 0.2
+  shootingMode: 3
   _damageToEnemy: 10
   _damageToCell: 2
   _forceAmount: 20
   bullet: {fileID: 1913493599678101969, guid: ecc6bd21449a60e4a8abe5b8742fed30, type: 3}
-  _explosionTime: 2
+  landmineLimit: 5
+  _explosionTime: 15
   _explosionTimes: 3
   _explosionRate: 2
 --- !u!1001 &3188477935461194419
