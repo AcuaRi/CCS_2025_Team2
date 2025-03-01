@@ -116,7 +116,7 @@ MonoBehaviour:
   firingRate: 0.2
   shootingMode: 0
   _damageToEnemy: 10
-  _damageToCell: 10
+  _damageToCell: 0
   _forceAmount: 20
 --- !u!1001 &7381444833190017473
 PrefabInstance:

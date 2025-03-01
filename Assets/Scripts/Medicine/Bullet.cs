@@ -86,6 +86,16 @@ public class Bullet : MonoBehaviour
         this._medicineType = medicinetype;
     }
 
+    public void setDamageToEnemy(float damageToEnemy)
+    {
+        this._damageToEnemy = damageToEnemy;
+    }
+
+    public void setDamageToCell(float damageToCell)
+    {
+        this._damageToCell = damageToCell;
+    }
+
     protected virtual void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.layer == 21) //Enemy

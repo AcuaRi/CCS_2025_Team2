@@ -72,6 +72,8 @@ public class Medicine_Cluster : Bullet
                 b.GetComponent<Bullet>().getVector(transform.position, transform.position + bulletDirection);                
                 b.GetComponent<Bullet>().setMedicineType(_medicineType);
                 b.GetComponent<Bullet>().setStartPoint(transform.position);
+                b.GetComponent<Bullet>().setDamageToEnemy(_damageToEnemy);
+                b.GetComponent<Bullet>().setDamageToCell(_damageToCell);
         }
     }
 
@@ -89,6 +91,8 @@ public class Medicine_Cluster : Bullet
                 b.GetComponent<Bullet>().getVector(transform.position, transform.position + bulletDirection);
                 b.GetComponent<Bullet>().setMedicineType(_medicineType);
                 b.GetComponent<Bullet>().setStartPoint(transform.position);
+                b.GetComponent<Bullet>().setDamageToEnemy(_damageToEnemy);
+                b.GetComponent<Bullet>().setDamageToCell(_damageToCell);
         }
     }
 }
