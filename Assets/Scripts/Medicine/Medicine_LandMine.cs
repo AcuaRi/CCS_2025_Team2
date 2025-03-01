@@ -8,6 +8,8 @@ public class Medicine_LandMine : Bullet
     [SerializeField]
     private GameObject bullet;
     [SerializeField]
+    public int landmineLimit;
+    [SerializeField]
     private float _explosionTime;
     [SerializeField]
     private int _explosionTimes;
@@ -43,7 +45,7 @@ public class Medicine_LandMine : Bullet
         return false;
     }
 
-    private void _explode()
+    public void _explode()
     {
         StartCoroutine("ExplodeCoroutine");
     }

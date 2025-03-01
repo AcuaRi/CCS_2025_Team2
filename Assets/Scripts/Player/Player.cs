@@ -37,6 +37,8 @@ public class Player : MonoBehaviour, IDamageable
     private GameObject[] bulletPrefabs = new GameObject[10];
     private float[] _firingrate = new float[10];
     private ShootingMode[] _shootingModes = new ShootingMode[10];
+    private int _landmineLimit;
+    private List<GameObject> landmines = new List<GameObject>();
 
     private ShootingMode _currentMode;
     
@@ -256,6 +258,10 @@ public class Player : MonoBehaviour, IDamageable
         bullet = bulletPrefabs[_medicineNum - 1];
         _currentMode = _shootingModes[_medicineNum - 1];
         _isShooting = false;
+        if (_currentMode == ShootingMode.Landmine)
+        {
+            _landmineLimit = bulletPrefabs[_medicineNum - 1].GetComponent<Medicine_LandMine>().landmineLimit;
+        }
         Debug.Log("MedicineType が変更されました: " + newType);
     }
 
@@ -344,10 +350,18 @@ public class Player : MonoBehaviour, IDamageable
         while (_isShooting && isAlive)
         {
             GameObject b = Instantiate(bullet, transform.position + bulletPoint, Quaternion.identity);
-            // b.GetComponent<Bullet>().getVector(Vector3.zero, Vector3.zero);
+            landmines.Add(b); // リストに追加
+
+            // landmineLimit を超えたら古いものを爆発させる
+            if (landmines.Count > _landmineLimit)
+            {
+                landmines.RemoveAt(0); // リストから削除
+                landmines[0].GetComponent<Medicine_LandMine>()._explode();// 先頭の地雷を爆発
+            }
+
             yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);
         }
-        //_shootingCoroutine = null;
+
         StopCoroutine(_shootingCoroutine);
         _shootingCoroutine = null;
     }
