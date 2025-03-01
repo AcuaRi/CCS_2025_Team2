@@ -700,8 +700,8 @@ RectTransform:
   - {fileID: 1818661918}
   - {fileID: 2074370440}
   - {fileID: 1577396649}
-  - {fileID: 1735057744}
   - {fileID: 83933708}
+  - {fileID: 1735057744}
   m_Father: {fileID: 156658657}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -859,7 +859,7 @@ GameObject:
   - component: {fileID: 83933708}
   - component: {fileID: 83933710}
   - component: {fileID: 83933709}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: FadeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}

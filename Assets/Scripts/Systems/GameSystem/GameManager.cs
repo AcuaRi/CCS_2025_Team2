@@ -87,6 +87,7 @@ public class GameManager : MonoBehaviour
         if(damage <= 0) return;
         
         this.currentHp -= damage;
+        if (currentHp <= 0) currentHp = 0;
         UIManager.Instance.SetBodyHpGaugeUI(currentHp, maxHp);
 
         if (currentHp <= 0)
@@ -95,7 +96,7 @@ public class GameManager : MonoBehaviour
             //SoundManager.Instance.PlayBGM("BGM_Lose");
             //SceneLoader.LoadSceneFast("ResultScene");
             
-            StartCoroutine(GameOverSequence());
+            if(!isGameOver) StartCoroutine(GameOverSequence());
         }
     }
 
@@ -143,7 +144,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = Mathf.Lerp(startScale, endScale, percent);
 
             // 화면 어둡게 만들기 (UIManager 활용)
-            UIManager.Instance.SetFadeEffect(percent * 255f);
+            UIManager.Instance.SetFadeEffect(percent);
 
             yield return null;
         }
