@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private bool isPaused = false;
     public bool IsPaused => isPaused;
     private bool isWaveRunning = false;
+    private bool isGameOver = false;
     
     
     private void Awake()
@@ -38,51 +39,7 @@ public class GameManager : MonoBehaviour
         currentHp = maxHp;
         UIManager.Instance.SetBodyHpGaugeUI(currentHp, maxHp);
         
-        //StartCoroutine(SpawnWaves());
-        
         StartCoroutine(UpdateGameTime());
-    }
-    
-    private IEnumerator SpawnWaves()
-    {
-        int waveNumber = 0;
-    
-        while (remainingTime > 0)
-        {
-            waveNumber++;
-            
-            GenerateWaveEnemies(waveNumber);
-            
-            yield return new WaitForSeconds(30f);
-        }
-    }
-
-    private void GenerateWaveEnemies(int waveNumber)
-    {
-        //var random = Random.Range(1, 6);
-        switch (waveNumber)
-        {
-            case 1:
-                EnemyGenerator.Instance.GenerateEnemy("Enemy_Bacillus", 5, 5, 3);
-                EnemyGenerator.Instance.GenerateEnemy("Enemy_Rensa", 5, 5, 3);
-                break;
-            case 2:
-                EnemyGenerator.Instance.GenerateEnemy("Enemy_MSSA", 5, 5, 3);
-                EnemyGenerator.Instance.GenerateEnemy("Enemy_MRSA", 5, 5, 3);
-                break;
-            case 3:
-                EnemyGenerator.Instance.GenerateEnemy("Enemy_Pesto", 5, 5, 3);
-                EnemyGenerator.Instance.GenerateEnemy("Enemy_Influenza", 5, 5, 3);
-                break;
-            case 4:
-                EnemyGenerator.Instance.GenerateEnemy("Enemy_Roku", 5, 5, 3);
-                EnemyGenerator.Instance.GenerateEnemy("Enemy_E_Coli", 5, 5, 3);
-                break;
-            case 5:
-                EnemyGenerator.Instance.GenerateEnemy("Enemy_Kurosuto", 5, 5, 3);
-                EnemyGenerator.Instance.GenerateEnemy("Enemy_MaicoPlazma", 5, 5, 3);
-                break;
-        }
     }
 
     void Update()
@@ -95,6 +52,7 @@ public class GameManager : MonoBehaviour
 
     void TogglePause()
     {
+        if(remainingTime <= 0 || isGameOver) return;
         isPaused = !isPaused;
         if (isPaused)
         {
@@ -133,9 +91,11 @@ public class GameManager : MonoBehaviour
 
         if (currentHp <= 0)
         {
-            SoundManager.Instance.StopBGM();
-            SoundManager.Instance.PlayBGM("BGM_Lose");
-            SceneLoader.LoadSceneFast("ResultScene");
+            //SoundManager.Instance.StopBGM();
+            //SoundManager.Instance.PlayBGM("BGM_Lose");
+            //SceneLoader.LoadSceneFast("ResultScene");
+            
+            StartCoroutine(GameOverSequence());
         }
     }
 
@@ -161,5 +121,37 @@ public class GameManager : MonoBehaviour
         }
         
         //no remaining time
+    }
+    
+    private IEnumerator GameOverSequence()
+    {
+        isGameOver = true;
+        SoundManager.Instance.StopBGM();
+        //SoundManager.Instance.PlayBGM("BGM_Lose");
+
+        float duration = 3f; // 3초 동안 연출
+        float elapsed = 0f;
+        float startScale = 1f;
+        float endScale = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime; // Time.timeScale의 영향을 받지 않도록
+            
+            var percent = Mathf.Clamp01(elapsed / duration);
+            
+            Time.timeScale = Mathf.Lerp(startScale, endScale, percent);
+
+            // 화면 어둡게 만들기 (UIManager 활용)
+            UIManager.Instance.SetFadeEffect(percent * 255f);
+
+            yield return null;
+        }
+
+        Time.timeScale = 0f; // 완전히 정지
+
+        yield return new WaitForSecondsRealtime(1f); // 1초 대기 (Time.timeScale=0이므로 Realtime 사용)
+
+        SceneLoader.LoadSceneFast("ResultScene");
     }
 }

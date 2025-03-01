@@ -47,6 +47,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject warningPanel;
     [Tooltip("GameObject of the warningPanel")]
     [SerializeField] private GameObject UIInfoPanel;
+    [Tooltip("Image for Fade Effect")]
+    [SerializeField] private Image fadeImage;
     
     private int selectedSlotIndex = 0;
     
@@ -208,5 +210,10 @@ public class UIManager : MonoBehaviour
     {
         var effect = damageEffectPool.Get().GetComponent<DamageNumericalEffect>();
         effect.SetDamageNumericalEffect(damage, damageType, target);
+    }
+    
+    public void SetFadeEffect(float alpha)
+    {
+        fadeImage.color = new Color(0, 0, 0, alpha);
     }
 }
