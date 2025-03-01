@@ -39,6 +39,10 @@ public class Player : MonoBehaviour, IDamageable
     private ShootingMode[] _shootingModes = new ShootingMode[10];
 
     private ShootingMode _currentMode;
+    
+    private Coroutine _healthRegenCoroutine;  
+    [SerializeField] private float healthRegenAmount = 5f;  
+    [SerializeField] private float regenDelay = 2f;  
 
     // �ˌ����[�h�̗񋓌^�A������������Ȃ���������
     public enum ShootingMode
@@ -386,6 +390,13 @@ public class Player : MonoBehaviour, IDamageable
         {
             StartInvincibility();
         }
+        
+        // 자동 회복이 중지된 경우 회복 시작
+        if (_healthRegenCoroutine != null)
+        {
+            StopCoroutine(_healthRegenCoroutine);
+        }
+        _healthRegenCoroutine = StartCoroutine(AutoHealthRegen());
     }
 
     private void StartInvincibility()
@@ -415,6 +426,7 @@ public class Player : MonoBehaviour, IDamageable
         UpdateHpGauge();
         isAlive = true;
         StartInvincibility();
+        
     }
     
     private void UpdateHpGauge()
@@ -424,5 +436,21 @@ public class Player : MonoBehaviour, IDamageable
             float percent = _currentHP / _playerHP;
             hpGaugeInstance.SetHpGauge(percent);
         }
+    }
+    
+    private IEnumerator AutoHealthRegen()
+    {
+        // 회복까지 대기
+        yield return new WaitForSeconds(regenDelay);
+
+        // 피해를 받지 않으면 자동으로 체력 회복
+        while (isAlive && _currentHP < _playerHP)
+        {
+            _currentHP += healthRegenAmount;
+            if (_currentHP > _playerHP) _currentHP = _playerHP;  // 체력 초과 방지
+            UpdateHpGauge();
+            yield return new WaitForSeconds(1f);  // 1초마다 회복
+        }
+        _healthRegenCoroutine = null;  // 회복 끝나면 코루틴 종료
     }
 }

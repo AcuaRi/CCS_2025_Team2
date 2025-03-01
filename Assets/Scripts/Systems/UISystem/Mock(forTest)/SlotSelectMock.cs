@@ -112,6 +112,16 @@ public class SlotSelectMock : MonoBehaviour
                 holdTimers[i] = 0f;
             }
         }
+        
+        if (!Mouse.current.rightButton.isPressed) // 우클릭 중이 아닐 때만 실행
+        {
+            float scrollValue = Mouse.current.scroll.ReadValue().y;
+            if (Mathf.Abs(scrollValue) > 0.1f) // 스크롤 값이 충분히 클 때만 반응
+            {
+                int direction = scrollValue > 0 ? 1 : -1;
+                ChangeSelectedMedicine(direction);
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -197,4 +207,47 @@ public class SlotSelectMock : MonoBehaviour
             unlockProgressTexts[i].text = unlockCosts[i].ToString();
         }
     }
+    
+    private void ChangeSelectedMedicine(int direction)
+    {
+        int currentIndex = GetSelectedSlotIndex();
+        int newIndex = FindNextUnlockedSlot(currentIndex, direction);
+
+        if (newIndex != -1)
+        {
+            UIManager.Instance.SelectSlot(newIndex);
+            selectedMedicineType = (MedicineType)(1 << newIndex);
+            OnMedicineTypeChanged?.Invoke(selectedMedicineType);
+        }
+    }
+
+    private int GetSelectedSlotIndex()
+    {
+        for (int i = 0; i < slotUnlocked.Length; i++)
+        {
+            if (slotUnlocked[i] && (selectedMedicineType == (MedicineType)(1 << i)))
+            {
+                return i;
+            }
+        }
+        return 0; // 기본값 (예외 방지)
+    }
+
+    private int FindNextUnlockedSlot(int startIndex, int direction)
+    {
+        int index = startIndex;
+
+        for (int i = 0; i < slotUnlocked.Length; i++) // 최대 10번 반복
+        {
+            index += direction;
+
+            if (index < 0) index = slotUnlocked.Length - 1; // 역순 이동 시 마지막으로
+            if (index >= slotUnlocked.Length) index = 0; // 정순 이동 시 처음으로
+
+            if (slotUnlocked[index]) return index;
+        }
+
+        return -1; // 개방된 슬롯이 없을 경우
+    }
+
 }
