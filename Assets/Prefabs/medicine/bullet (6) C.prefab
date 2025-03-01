@@ -117,6 +117,7 @@ MonoBehaviour:
   shootingMode: 2
   _damageToEnemy: 10
   _damageToCell: 10
+  _forceAmount: 20
   bullet: {fileID: 1913493599678101969, guid: ecc6bd21449a60e4a8abe5b8742fed30, type: 3}
   _setStartBool: 1
   clusterType: 1

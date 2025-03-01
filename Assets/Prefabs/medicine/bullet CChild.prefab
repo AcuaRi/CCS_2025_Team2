@@ -117,6 +117,7 @@ MonoBehaviour:
   shootingMode: 0
   _damageToEnemy: 2
   _damageToCell: 10
+  _forceAmount: 20
 --- !u!1001 &7489051753160259881
 PrefabInstance:
   m_ObjectHideFlags: 0
