@@ -9107,7 +9107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1538829250}
-  parallaxFactor: 0.4
+  parallaxFactor: 0.2
   smoothSpeed: 2
 --- !u!1 &556819182
 GameObject:
@@ -41247,6 +41247,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 438952635155876992, guid: 0b1d02f0aeb696b43aadb0042d332037, type: 3}
+      propertyPath: poolSize
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 438952635155876992, guid: 0b1d02f0aeb696b43aadb0042d332037, type: 3}
+      propertyPath: soundResources.Array.size
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 438952635155876992, guid: 0b1d02f0aeb696b43aadb0042d332037, type: 3}
+      propertyPath: soundResources.Array.data[21].key
+      value: Change_weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 438952635155876992, guid: 0b1d02f0aeb696b43aadb0042d332037, type: 3}
+      propertyPath: soundResources.Array.data[5].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: a45453640409c0b4cbee7572badb4769, type: 3}
+    - target: {fileID: 438952635155876992, guid: 0b1d02f0aeb696b43aadb0042d332037, type: 3}
+      propertyPath: soundResources.Array.data[21].Clip
+      value: 
+      objectReference: {fileID: 8300000, guid: fd8eb6b22af74de4c81de957afda8c1c, type: 3}
     - target: {fileID: 2652706684003668849, guid: 0b1d02f0aeb696b43aadb0042d332037, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

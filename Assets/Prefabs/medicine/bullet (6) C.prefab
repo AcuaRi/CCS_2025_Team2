@@ -115,7 +115,7 @@ MonoBehaviour:
   deleteDistance: 50
   firingRate: 1
   shootingMode: 2
-  _damageToEnemy: 2
+  _damageToEnemy: 4
   _damageToCell: 0
   _forceAmount: 20
   bullet: {fileID: 1913493599678101969, guid: ecc6bd21449a60e4a8abe5b8742fed30, type: 3}

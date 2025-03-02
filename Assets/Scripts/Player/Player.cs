@@ -350,13 +350,14 @@ public class Player : MonoBehaviour, IDamageable
         while (_isShooting && isAlive)
         {
             GameObject b = Instantiate(bullet, transform.position + bulletPoint, Quaternion.identity);
+            b.GetComponent<Bullet>().setMedicineType(_medicineType);
             landmines.Add(b); // リストに追加
 
             // landmineLimit を超えたら古いものを爆発させる
             if (landmines.Count > _landmineLimit)
             {
                 landmines.RemoveAt(0); // リストから削除
-                landmines[0].GetComponent<Medicine_LandMine>()._explode();// 先頭の地雷を爆発
+                landmines[0].GetComponent<Medicine_LandMine>()?._explode();// 先頭の地雷を爆発
             }
 
             yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);

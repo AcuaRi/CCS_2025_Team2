@@ -157,6 +157,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(1f); // 1초 대기 (Time.timeScale=0이므로 Realtime 사용)
 
+        Time.timeScale = 1f;
         SceneLoader.LoadSceneFast("ResultScene");
     }
 
@@ -190,7 +191,7 @@ public class GameManager : MonoBehaviour
         
         Time.timeScale = 1f;
         
-        yield return new WaitForSecondsRealtime(5f); 
+        yield return new WaitForSecondsRealtime(3f); 
         
         elapsed = 0;
         duration = 1;

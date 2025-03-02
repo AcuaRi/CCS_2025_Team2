@@ -61,6 +61,7 @@ public class SlotSelectMock : MonoBehaviour
         UIManager.Instance.SelectSlot(0);
         selectedMedicineType = MedicineType.Medicine1;
         OnMedicineTypeChanged?.Invoke(selectedMedicineType);
+        SoundManager.Instance.PlaySound("Change_weapon", this.transform.position);
 
         InvokeRepeating(nameof(AddPointsPerSecond), 1f, 1f);
     }
@@ -79,8 +80,9 @@ public class SlotSelectMock : MonoBehaviour
                     {
                         UIManager.Instance.SelectSlot(i);
                         selectedMedicineType = (MedicineType)(1<<i);
-
+                        
                         OnMedicineTypeChanged?.Invoke(selectedMedicineType);
+                        SoundManager.Instance.PlaySound("Change_weapon", this.transform.position);
                     }
                 }
                 else
@@ -104,6 +106,7 @@ public class SlotSelectMock : MonoBehaviour
                         selectedMedicineType = (MedicineType)(1<<i);
 
                         OnMedicineTypeChanged?.Invoke(selectedMedicineType);
+                        SoundManager.Instance.PlaySound("Change_weapon", this.transform.position);
                     }
                 }
             }
