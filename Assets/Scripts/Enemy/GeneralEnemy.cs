@@ -373,8 +373,12 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         float caculatedDamage = damage;
         int damageType = 4; //good: 1, bad: 2, resistant: 3, dafault: 4
         
+        if (medicineType == MedicineType.None)
+        {
+            SoundManager.Instance.PlaySound("GetDamaged_Default", transform.position);
+        }
         //Case of resistant medicine
-        if ((medicineType & generalMonsterData.resistantMedicineType) == medicineType)
+        else if ((medicineType & generalMonsterData.resistantMedicineType) == medicineType)
         {
             caculatedDamage = damage / 20;
             SoundManager.Instance.PlaySound("GetDamaged_shield", transform.position);

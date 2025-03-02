@@ -57,7 +57,7 @@ MonoBehaviour:
   - key: GetDamaged_Default
     Clip: {fileID: 8300000, guid: 4c29fe45548a1ec47a28a273d7dda6d7, type: 3}
   - key: GetDamaged_Good
-    Clip: {fileID: 8300000, guid: 0316e1ff24e03674ba7f9d58fa894e1b, type: 3}
+    Clip: {fileID: 8300000, guid: a45453640409c0b4cbee7572badb4769, type: 3}
   - key: GetDamaged_shield
     Clip: {fileID: 8300000, guid: 61893bc3b00bbe74d848de4dedaa677d, type: 3}
   - key: Shoot
@@ -88,7 +88,9 @@ MonoBehaviour:
     Clip: {fileID: 8300000, guid: d89dd9f7f64f91040a0d4b247dbfdb03, type: 3}
   - key: Heartbeat_disease
     Clip: {fileID: 8300000, guid: 4787ae697a127be429c4b426730bf498, type: 3}
-  poolSize: 50
+  - key: Change_weapon
+    Clip: {fileID: 8300000, guid: fd8eb6b22af74de4c81de957afda8c1c, type: 3}
+  poolSize: 500
   soundNodePrefab: {fileID: 3179050972271029704, guid: 92d0152613ea5464eb373e9b96194dcd, type: 3}
   audioSource_BGM: {fileID: 3833572036004287736}
 --- !u!82 &3833572036004287736

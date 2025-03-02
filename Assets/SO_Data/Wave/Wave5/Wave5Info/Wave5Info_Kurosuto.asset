@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Wave5Info_Kurosuto
   m_EditorClassIdentifier: 
   EnemyType: 8
-  NumOnce: 20
+  NumOnce: 2
   Interval: 1
   IsRandom: 0

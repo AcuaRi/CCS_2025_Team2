@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     hp: 40
-    moveSpeed: 5
+    moveSpeed: 15
     moveDirection: {x: 1, y: -1}
-    targetLossRadius: 0
-    recognizeRadius: 5
+    targetLossRadius: 15
+    recognizeRadius: 1
     targetLayer:
       serializedVersion: 2
       m_Bits: 0
@@ -26,9 +26,9 @@ MonoBehaviour:
     attackSpeed: 5
     attackDamage: 10
     divisionCoolTime: 10
-    divisionProbability: 0.2
+    divisionProbability: 0
     goodMedicineTypes: 0
-    badMedicineTypes: 939
+    badMedicineTypes: 941
     resistantMedicineType: 0
     points: 1
   hp: 40
@@ -45,7 +45,7 @@ MonoBehaviour:
   attackDamage: 10
   divisionCoolTime: 10
   divisionProbability: 0
-  goodMedicineTypes: 0
+  goodMedicineTypes: 16
   badMedicineTypes: 941
   resistantMedicineType: 0
   points: 1

@@ -16,8 +16,8 @@ MonoBehaviour:
     hp: 10
     moveSpeed: 5
     moveDirection: {x: 1, y: -1}
-    targetLossRadius: 0
-    recognizeRadius: 5
+    targetLossRadius: 15
+    recognizeRadius: 1
     targetLayer:
       serializedVersion: 2
       m_Bits: 2048
@@ -45,7 +45,7 @@ MonoBehaviour:
   attackDamage: 10
   divisionCoolTime: 10
   divisionProbability: 0.2
-  goodMedicineTypes: 0
+  goodMedicineTypes: 64
   badMedicineTypes: 319
   resistantMedicineType: 0
   points: 1

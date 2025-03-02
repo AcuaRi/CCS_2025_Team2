@@ -38,7 +38,8 @@ public class Player : MonoBehaviour, IDamageable
     private float[] _firingrate = new float[10];
     private ShootingMode[] _shootingModes = new ShootingMode[10];
     private int _landmineLimit;
-    private List<GameObject> landmines = new List<GameObject>();
+    //private List<GameObject> landmines = new List<GameObject>();
+    private Queue<GameObject> landmines = new Queue<GameObject>();
 
     private ShootingMode _currentMode;
     
@@ -174,33 +175,6 @@ public class Player : MonoBehaviour, IDamageable
         //_rb.velocity = new Vector2(_input.x * _playerSpeed, _input.y * _playerSpeed);
         _rb.transform.Translate( _playerSpeed * Time.deltaTime *  _input);
     }
-
-/*    private void _medicineChoice() // Player�N���X���ł��Ȃ��Ă����������A�e��type�������Ă��Ȃ��ƃ_���[�W���荢��̂Œe�ɂ��^�C�v����
-    {
-        if (Input.GetKey(KeyCode.Alpha1))
-        {
-            _medicineType = MedicineType.Medicine1;
-            _medicineNum = 1;
-        }
-        else if (Input.GetKey(KeyCode.Alpha2))
-        {
-            _medicineType = MedicineType.Medicine2;
-            _medicineNum = 2;
-        }
-        else if (Input.GetKey(KeyCode.Alpha3))
-        {
-            _medicineType = MedicineType.Medicine3;
-            _medicineNum = 3;
-        }
-        else if (Input.GetKey(KeyCode.Alpha4))
-        {
-            _medicineType = MedicineType.Medicine4;
-            _medicineNum = 4;
-        }
-        
-        bullet = bulletPrefabs[_medicineNum - 1];
-        _currentMode = shootingModes[_medicineNum - 1];
-    }*/
 
     private void HandleMedicineTypeChanged(MedicineType newType)
     {
@@ -345,19 +319,44 @@ public class Player : MonoBehaviour, IDamageable
         _shootingCoroutine = null;
     }
 
-    IEnumerator shootingTypeLandmine() // explodes after ○○s
+    // IEnumerator shootingTypeLandmine() // explodes after ○○s
+    // {
+    //     while (_isShooting && isAlive)
+    //     {
+    //         GameObject b = Instantiate(bullet, transform.position + bulletPoint, Quaternion.identity);
+    //         b.GetComponent<Bullet>().setMedicineType(_medicineType);
+    //         landmines.Add(b); // リストに追加
+    //
+    //         // landmineLimit を超えたら古いものを爆発させる
+    //         if (landmines.Count > _landmineLimit)
+    //         {
+    //             landmines[0].GetComponent<Medicine_LandMine>()?._explode();// 先頭の地雷を爆発
+    //             landmines.RemoveAt(0); // リストから削除
+    //         }
+    //
+    //         yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);
+    //     }
+    //
+    //     StopCoroutine(_shootingCoroutine);
+    //     _shootingCoroutine = null;
+    // }
+    
+    IEnumerator shootingTypeLandmine() 
     {
         while (_isShooting && isAlive)
         {
             GameObject b = Instantiate(bullet, transform.position + bulletPoint, Quaternion.identity);
             b.GetComponent<Bullet>().setMedicineType(_medicineType);
-            landmines.Add(b); // リストに追加
-
-            // landmineLimit を超えたら古いものを爆発させる
+            landmines.Enqueue(b); 
+            
             if (landmines.Count > _landmineLimit)
             {
-                landmines.RemoveAt(0); // リストから削除
-                landmines[0].GetComponent<Medicine_LandMine>()?._explode();// 先頭の地雷を爆発
+                GameObject oldLandmine = landmines.Dequeue(); 
+                if (oldLandmine != null)
+                {
+                    oldLandmine.GetComponent<Medicine_LandMine>()?._explode(); 
+                    Destroy(oldLandmine); 
+                }
             }
 
             yield return new WaitForSeconds(_firingrate[_medicineNum - 1]);

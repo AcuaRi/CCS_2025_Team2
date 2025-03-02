@@ -115,7 +115,7 @@ MonoBehaviour:
   deleteDistance: 400
   firingRate: 0.05
   shootingMode: 0
-  _damageToEnemy: 5
+  _damageToEnemy: 3
   _damageToCell: 2
   _forceAmount: 20
 --- !u!1001 &2933203317589212086
