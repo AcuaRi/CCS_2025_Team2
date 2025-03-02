@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     private bool isWaveRunning = false;
     private bool isGameOver = false;
     
+    private VictoryWaveEffect victoryWaveEffect;
     
     private void Awake()
     {
@@ -32,6 +33,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        victoryWaveEffect = GetComponent<VictoryWaveEffect>();
+        
         SoundManager.Instance.PlayBGM("BGM");
         
         remainingTime = playTime;
@@ -73,7 +76,8 @@ public class GameManager : MonoBehaviour
         {
             remainingTime = 0f;
             // GameOver Logic
-            SceneLoader.LoadSceneFast("ResultScene 1");
+            //SceneLoader.LoadSceneFast("ResultScene 1");
+            if(!isGameOver) StartCoroutine(GameClearSequence());
         }
         
         if (UIManager.Instance != null)
@@ -130,7 +134,7 @@ public class GameManager : MonoBehaviour
         SoundManager.Instance.StopBGM();
         //SoundManager.Instance.PlayBGM("BGM_Lose");
 
-        float duration = 3f; // 3초 동안 연출
+        float duration = 2f;
         float elapsed = 0f;
         float startScale = 1f;
         float endScale = 0f;
@@ -149,10 +153,60 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
-        Time.timeScale = 0f; // 완전히 정지
+        Time.timeScale = 0f;
 
         yield return new WaitForSecondsRealtime(1f); // 1초 대기 (Time.timeScale=0이므로 Realtime 사용)
 
         SceneLoader.LoadSceneFast("ResultScene");
+    }
+
+    private IEnumerator GameClearSequence()
+    {
+        isGameOver = true;
+        SoundManager.Instance.StopBGM();
+
+        float duration = 1f; // 3초 동안 연출
+        float elapsed = 0f;
+        float startScale = 1f;
+        float endScale = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime; // Time.timeScale의 영향을 받지 않도록
+            
+            var percent = Mathf.Clamp01(elapsed / duration);
+            
+            Time.timeScale = Mathf.Lerp(startScale, endScale, percent);
+
+            // 화면 어둡게 만들기 (UIManager 활용)
+            //UIManager.Instance.SetFadeEffect(percent);
+            yield return null;
+        }
+        
+        Time.timeScale = 0.01f;
+        
+        victoryWaveEffect.StartVictoryEffect();
+        yield return new WaitForSecondsRealtime(3f); 
+        
+        Time.timeScale = 1f;
+        
+        yield return new WaitForSecondsRealtime(5f); 
+        
+        elapsed = 0;
+        duration = 1;
+        
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime; // Time.timeScale의 영향을 받지 않도록
+            
+            var percent = Mathf.Clamp01(elapsed / duration);
+            
+            UIManager.Instance.SetFadeEffect(percent);
+            yield return null;
+        }
+        
+        //yield return new WaitForSecondsRealtime(1f); 
+
+        SceneLoader.LoadSceneFast("ResultScene 1");
     }
 }

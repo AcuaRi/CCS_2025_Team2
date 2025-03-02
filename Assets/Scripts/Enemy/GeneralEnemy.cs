@@ -260,6 +260,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
     protected virtual void CheckTarget()
     {
         if ( currentState != idleState) return;
+        if ( nextState == deathState || currentState == deathState) return;
 
         Collider2D target = Physics2D.OverlapCircle(rb.position,  generalMonsterData.recognizeRadius,  generalMonsterData.targetLayer);
         if (target != null && target.gameObject.activeSelf == true)
@@ -356,6 +357,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         
         UpdateHpGauge();
 
+        
         if ( generalMonsterData.hp <= 0)
         {
             nextState = deathState;
@@ -404,6 +406,7 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         generalMonsterData.hp -= caculatedDamage;
         generalMonsterData.hp = Mathf.Clamp(generalMonsterData.hp, 0, maxHp);
         
+       
         if (hpGaugeInstance != null && !hpGaugeInstance.gameObject.activeSelf)
         {
             hpGaugeInstance.gameObject.SetActive(true);
@@ -412,6 +415,13 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         UIManager.Instance.ShowDamageEffect(caculatedDamage, damageType, this.transform);
         
         UpdateHpGauge();
+        
+        if ( generalMonsterData.hp <= 0)
+        {
+            nextState = deathState;
+            return;
+        }
+        
         if (force.magnitude > 0.1f)
         {
             rb.AddForce(force, (ForceMode2D)ForceMode.Impulse);
@@ -420,11 +430,6 @@ public class GeneralEnemy : MonoBehaviour, IDamageable
         generalMonsterData.targetTransform = GameObject.Find("Player").transform;
         nextState = attackState;
         FindTarget = true;
-        
-        if ( generalMonsterData.hp <= 0)
-        {
-            nextState = deathState;
-        }
         
         //increase resistance of medicine
         if (medicineType != MedicineType.None)
