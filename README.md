@@ -1,7 +1,7 @@
 # 🎮 **PANACEA**
 <p align="center">
   <a href="https://www.youtube.com/watch?v=KULhUBF-j1s" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.youtube.com/vi/KULhUBF-j1s/0.jpg" alt="PANACEA Gameplay" width="600">
+    <img src="https://img.youtube.com/vi/KULhUBF-j1s/0.jpg" alt="PANACEA Gameplay" width="700">
   </a>
 </p>
 
