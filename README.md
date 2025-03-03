@@ -1,5 +1,11 @@
 # 🎮 **PANACEA**
-<img width="700" alt="TitleImage" src="https://github.com/user-attachments/assets/dd0e0b72-e986-4c1d-a99d-f8405f477f41" />
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=KULhUBF-j1s">
+    <img src="https://img.youtube.com/vi/KULhUBF-j1s/0.jpg" alt="PANACEA Gameplay" width="700">
+  </a>
+</p>
+
+
 
 ## 📝 **概要 (Overview)**
 
