@@ -26,6 +26,9 @@
 # Web Build directory
 /WebBuildTest
 
+# Final Build directory
+/Build_Final
+
 # Visual Studio cache directory
 .vs/
 
